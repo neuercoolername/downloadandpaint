@@ -5,6 +5,8 @@ export default function Scratch () {
 
     const canvasRef = useRef(null)
 
+    // draw image
+
     const draw = ctx => {
         ctx.fillStyle = '#111000'
         ctx.beginPath()

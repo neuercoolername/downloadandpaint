@@ -3,6 +3,7 @@
 
 import {useState} from 'react'
 import ScratchOff from '../components/ScratchOff'
+import Scratch from '../components/Scratch'
 
 
 function LandingPage() {
@@ -11,13 +12,18 @@ function LandingPage() {
  
 
     return (
-        <ScratchOff
-        width={window.width}
-        height={window.height}
+      <div className='scratchContainer'>
+      <Scratch />
+  <ScratchOff
+        className={'scratchOff'}
+        width={window.innerWidth}
+        height={window.innerHeight}
         background="images/background.png"
         foreground='images/foreground.jpg'
         // onfinished={callback}
       />
+      </div>
+      
     )
 }
 

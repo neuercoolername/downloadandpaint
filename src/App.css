@@ -37,11 +37,7 @@
   }
 }
 
-.image-container {
-  position: relative;
-  width: 500px;
-  height: 500px;
-}
+
 
 .background-image {
   position:absolute;
@@ -75,4 +71,16 @@
 
 .overlay-image:hover::before {
   transform: scale(1);
+}
+
+
+.scratch-off {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+}
+
+.scratchContainer {
+  height:100vh;
+  width: auto;
 }

@@ -89,6 +89,7 @@ export default function ScratchOff({width, height, background, foreground, onfin
     // Render DOM
     return (
         <canvas
+            className='scratch-off'
             ref={canvasReference}
             onMouseMove={(eventMouse) => {
                 handleMouseMove(eventMouse, scratchPosition, setScratchPosition);

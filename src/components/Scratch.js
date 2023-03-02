@@ -2,12 +2,12 @@ import React, { useRef, useEffect, useState } from "react";
 
 export default function Scratch() {
   const [deviceType, setDeviceType] = useState(null);
-  // const [canvasLoaded,setCanvasLoaded] = useState(false)
   const canvasRef = useRef(null);
 
   // initial values for mouse x and y
   let mouseX = 0;
   let mouseY = 0;
+
   // let isDragged = true
 
   // detect device
@@ -23,7 +23,7 @@ export default function Scratch() {
     }
   };
 
-  // mouse handling
+ 
 
   // get position of mouse/touch
 
@@ -54,7 +54,7 @@ export default function Scratch() {
       scratch(mouseX, mouseY);
     });
 
-    const scratch = (x, y) => {
+    const scratch = ( x, y) => {
       context.globalCompositeOperation = "destination-out";
       context.beginPath();
       context.arc(x, y, 25, 0, 2 * Math.PI);

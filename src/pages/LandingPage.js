@@ -1,30 +1,14 @@
-
-
-
-import {useState} from 'react'
-import ScratchOff from '../components/ScratchOff'
-import Scratch from '../components/Scratch'
-
+import { useState } from "react";
+import Scratch from "../components/Scratch";
 
 function LandingPage() {
-  const [cursorPosition,setCursorPosition] = useState({x:0,y:0})
+  const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
 
- 
-
-    return (
-      <div className='scratchContainer'>
+  return (
+    
       <Scratch />
-  {/* <ScratchOff
-        className={'scratchOff'}
-        width={window.innerWidth}
-        height={window.innerHeight}
-        background="images/background.png"
-        foreground='images/foreground.jpg'
-        // onfinished={callback}
-      /> */}
-      </div>
-      
-    )
+   
+  );
 }
 
-export default LandingPage
+export default LandingPage;

@@ -80,16 +80,27 @@
   height: 100vh;
 } */
 
-.scratchContainer {
+/* .scratchContainer {
   height: 100vh;
   width: 100vw;
+  object-fit: cover;
   position: relative;
-}
+} */
+
+/* .scratch--canvas {
+  height: 100vh;
+  width: 100vw;
+  object-fit: cover;
+  position: absolute;
+
+} */
 
 .background--img {
   height: 100vh;
   width: 100vw;
   position: absolute;
+  object-fit: cover;
+  object-position: 0% 10%;
   top:0;
   left:0;
   z-index: -1;

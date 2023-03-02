@@ -14,14 +14,14 @@ function LandingPage() {
     return (
       <div className='scratchContainer'>
       <Scratch />
-  <ScratchOff
+  {/* <ScratchOff
         className={'scratchOff'}
         width={window.innerWidth}
         height={window.innerHeight}
         background="images/background.png"
         foreground='images/foreground.jpg'
         // onfinished={callback}
-      />
+      /> */}
       </div>
       
     )

@@ -74,13 +74,23 @@
 }
 
 
-.scratch-off {
+/* .scratch-off {
   position: relative;
   width: 100vw;
   height: 100vh;
-}
+} */
 
 .scratchContainer {
-  height:100vh;
-  width: auto;
+  height: 100vh;
+  width: 100vw;
+  position: relative;
+}
+
+.background--img {
+  height: 100vh;
+  width: 100vw;
+  position: absolute;
+  top:0;
+  left:0;
+  z-index: -1;
 }

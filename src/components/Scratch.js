@@ -1,8 +1,12 @@
 import React, { useRef, useEffect, useState } from "react";
+import drawImageProp from "../utilities/drawImageProp";
 
 export default function Scratch() {
   const [deviceType, setDeviceType] = useState(null);
   const canvasRef = useRef(null);
+
+  const windowRatio = window.innerHeight/window.innerWidth
+
 
   // initial values for mouse x and y
   let mouseX = 0;
@@ -37,7 +41,7 @@ export default function Scratch() {
     img.src = "./images/foreground.jpg"; // Set source path
 
     window.onload = function () {
-      ctx.drawImage(img, 0, 0,window.innerWidth,window.innerWidth);
+      drawImageProp(ctx,img)
     };
   };
 
@@ -45,6 +49,9 @@ export default function Scratch() {
     const canvas = canvasRef.current;
     const context = canvas.getContext("2d");
 
+
+
+    console.log(windowRatio)
     //     var heightRatio = 0.5;
     // canvas.height = canvas.width * heightRatio;
 
@@ -80,8 +87,8 @@ export default function Scratch() {
       <canvas
         // width="1000" height="1000"
         className="scratch--canvas"
-        width={window.innerWidth}
-        height={window.innerHeight}
+        width={window.innerWidth }
+        height={window.innerHeight }
         ref={canvasRef}
       />
 

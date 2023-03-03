@@ -38,7 +38,14 @@ export default function Scratch() {
 
   const draw = (ctx, canvas) => {
     const img = new Image(); // Create new img element
-    img.src = "./images/foreground.jpg"; // Set source path
+
+    if (windowRatio < 0.75) {
+      img.src = './images/foreground-wide.png'
+    } else {
+      img.src = "./images/foreground.jpg"; // Set source path
+
+    }
+
 
     window.onload = function () {
       drawImageProp(ctx,img)
@@ -67,6 +74,9 @@ export default function Scratch() {
       context.fill();
     };
 
+    draw(context, canvas);
+    isTouchDevice();
+
     // const handleResize = e => {
     //   context.canvas.height = window.innerHeight;
     //   context.canvas.width = window.innerWidth;
@@ -78,8 +88,7 @@ export default function Scratch() {
     // return () => window.removeEventListener("resize", handleResize)
 
     //Our draw come here
-    draw(context, canvas);
-    isTouchDevice();
+   
   }, []);
 
   return (
@@ -87,14 +96,15 @@ export default function Scratch() {
       <canvas
         // width="1000" height="1000"
         className="scratch--canvas"
-        width={window.innerWidth }
-        height={window.innerHeight }
+        width={window.innerWidth}
+        height={window.innerHeight}
         ref={canvasRef}
       />
 
       <img
         className="background--img"
-        src="./images/background.png"
+       src={windowRatio < 0.75 ? './images/background-wide.png': './images/background.png'}
+        
         alt="Painter by the Wall by Edvard Munch"
       />
     </div>

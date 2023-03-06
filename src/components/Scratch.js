@@ -3,8 +3,10 @@ import drawImageProp from "../utilities/drawImageProp";
 import scratch from "../utilities/drawScratch";
 
 export default function Scratch() {
-  const [deviceType, setDeviceType] = useState(null);
-  const [backgroundImageLoaded,setBackgroundImageLoaded] = useState(false)
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
+  const [isDragged, setIsDragged] = useState(false);
+  // const [mouseX,se]
+  const [backgroundImageLoaded, setBackgroundImageLoaded] = useState(false);
   const canvasRef = useRef(null);
 
   let windowRatio = window.innerHeight / window.innerWidth;
@@ -13,33 +15,16 @@ export default function Scratch() {
   let mouseX = 0;
   let mouseY = 0;
 
-  // let isDragged = true
-
-  // detect device
-
-  const isTouchDevice = () => {
-    try {
-      document.createEvent("TouchEvent");
-      setDeviceType("touch");
-      return true;
-    } catch (e) {
-      setDeviceType("mouse");
-      return false;
-    }
-  };
-
   // get position of mouse/touch
 
   const getPosition = (e) => {
-    mouseX = !isTouchDevice() ? e.pageX : e.touches[0].pageX;
-    mouseY = !isTouchDevice() ? e.pageY : e.touches[0].pageY;
+    mouseX = !isTouchDevice ? e.pageX : e.touches[0].pageX;
+    mouseY = !isTouchDevice ? e.pageY : e.touches[0].pageY;
   };
-
-  // draw image
 
   const draw = (ctx, canvas) => {
     windowRatio = window.innerHeight / window.innerWidth;
-    setBackgroundImageLoaded(false)
+    setBackgroundImageLoaded(false);
     const img = new Image(); // Create new img element
     if (windowRatio < 0.75) {
       img.src = "./images/foreground-wide.png";
@@ -48,12 +33,29 @@ export default function Scratch() {
     }
 
     img.onload = () => {
-      
-      drawImageProp(ctx, img)
-      setBackgroundImageLoaded(true)
+      drawImageProp(ctx, img);
+      setBackgroundImageLoaded(true);
+    };
+  };
+
+  // check if device is touch device
+
+  useEffect(() => {
+    const isTouchDevice = () => {
+      try {
+        document.createEvent("TouchEvent");
+        setIsTouchDevice(true);
+        return true;
+      } catch (e) {
+        setIsTouchDevice(false);
+        return false;
+      }
     };
 
-  };
+    isTouchDevice();
+  }, []);
+
+  // this handles the resize
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -74,6 +76,35 @@ export default function Scratch() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  // this handles touch devices
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext("2d");
+
+    let touch = {
+      down: "touchstart",
+      move: "touchmove",
+      up: "touchstop",
+    };
+
+    canvas.addEventListener(touch.down, (e) => {
+      setIsDragged(true)
+      getPosition(e)
+      scratch(ctx, mouseX, mouseY);
+
+      // console.log(getPosition(e))
+    });
+
+    canvas.addEventListener(touch.move, (e)=>{
+      getPosition(e)
+      scratch(ctx, mouseX, mouseY);
+
+    })
+  });
+
+  // this handles the drawing by mouseover
+
   useEffect(() => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
@@ -84,8 +115,6 @@ export default function Scratch() {
     });
 
     draw(ctx, canvas);
-    console.log("loaded");
-    isTouchDevice();
   }, []);
 
   return (
@@ -97,24 +126,28 @@ export default function Scratch() {
         ref={canvasRef}
       />
 
-{(backgroundImageLoaded) &&(
-  <img
-        className="background--img"
-        src={
-          windowRatio < 0.75
-            ? "./images/background-wide.png"
-            : "./images/background.png"
-        }
-        alt="Painter by the Wall by Edvard Munch"
-      />
-  
-
- )}
- {!(backgroundImageLoaded) && (
-    <img className='background--img' src={windowRatio < 0.75 ? './images/foreground-wide.png' : './images/foreground.jpg'} alt="Painter by the Wall by Edvard Munch" />
-  )}
-
-      
+      {backgroundImageLoaded && (
+        <img
+          className="background--img"
+          src={
+            windowRatio < 0.75
+              ? "./images/background-wide.png"
+              : "./images/background.png"
+          }
+          alt="Painter by the Wall by Edvard Munch"
+        />
+      )}
+      {!backgroundImageLoaded && (
+        <img
+          className="background--img"
+          src={
+            windowRatio < 0.75
+              ? "./images/foreground-wide.png"
+              : "./images/foreground.jpg"
+          }
+          alt="Painter by the Wall by Edvard Munch"
+        />
+      )}
     </div>
   );
 }

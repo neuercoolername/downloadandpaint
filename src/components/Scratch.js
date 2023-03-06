@@ -107,7 +107,12 @@ export default function Scratch() {
         }
         alt="Painter by the Wall by Edvard Munch"
       />
+  
+
  )}
+ {!(backgroundImageLoaded) && (
+    <img className='background--img' src={windowRatio < 0.75 ? './images/foreground-wide.png' : './images/foreground.jpg'} alt="Painter by the Wall by Edvard Munch" />
+  )}
 
       
     </div>

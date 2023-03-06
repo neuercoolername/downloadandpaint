@@ -5,7 +5,6 @@ import scratch from "../utilities/drawScratch";
 export default function Scratch() {
   const [isTouchDevice, setIsTouchDevice] = useState(false);
   const [isDragged, setIsDragged] = useState(false);
-  // const [mouseX,se]
   const [backgroundImageLoaded, setBackgroundImageLoaded] = useState(false);
   const canvasRef = useRef(null);
 
@@ -25,11 +24,11 @@ export default function Scratch() {
   const draw = (ctx, canvas) => {
     windowRatio = window.innerHeight / window.innerWidth;
     setBackgroundImageLoaded(false);
-    const img = new Image(); // Create new img element
+    const img = new Image(); 
     if (windowRatio < 0.75) {
-      img.src = "./images/foreground-wide.png";
+      img.src = "./images/foreground-wide.jpg";
     } else {
-      img.src = "./images/foreground.jpg"; // Set source path
+      img.src = "./images/foreground.jpg"; 
     }
 
     img.onload = () => {
@@ -92,8 +91,6 @@ export default function Scratch() {
       setIsDragged(true)
       getPosition(e)
       scratch(ctx, mouseX, mouseY);
-
-      // console.log(getPosition(e))
     });
 
     canvas.addEventListener(touch.move, (e)=>{
@@ -131,8 +128,8 @@ export default function Scratch() {
           className="background--img"
           src={
             windowRatio < 0.75
-              ? "./images/background-wide.png"
-              : "./images/background.png"
+              ? "./images/background-wide.jpg"
+              : "./images/background.jpg"
           }
           alt="Painter by the Wall by Edvard Munch"
         />
@@ -142,7 +139,7 @@ export default function Scratch() {
           className="background--img"
           src={
             windowRatio < 0.75
-              ? "./images/foreground-wide.png"
+              ? "./images/foreground-wide.jpg"
               : "./images/foreground.jpg"
           }
           alt="Painter by the Wall by Edvard Munch"

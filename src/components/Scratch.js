@@ -4,9 +4,10 @@ import scratch from "../utilities/drawScratch";
 
 export default function Scratch() {
   const [deviceType, setDeviceType] = useState(null);
+  const [backgroundImageLoaded,setBackgroundImageLoaded] = useState(false)
   const canvasRef = useRef(null);
 
-  const windowRatio = window.innerHeight / window.innerWidth;
+  let windowRatio = window.innerHeight / window.innerWidth;
 
   // initial values for mouse x and y
   let mouseX = 0;
@@ -37,38 +38,41 @@ export default function Scratch() {
   // draw image
 
   const draw = (ctx, canvas) => {
+    windowRatio = window.innerHeight / window.innerWidth;
+    setBackgroundImageLoaded(false)
     const img = new Image(); // Create new img element
-
     if (windowRatio < 0.75) {
       img.src = "./images/foreground-wide.png";
     } else {
       img.src = "./images/foreground.jpg"; // Set source path
     }
 
-    window.onload = function () {
-      drawImageProp(ctx, img);
+    img.onload = () => {
+      
+      drawImageProp(ctx, img)
+      setBackgroundImageLoaded(true)
     };
+
   };
 
-  // useEffect(()=>{
-  //   const canvas = canvasRef.current;
-  //   const ctx = canvas.getContext("2d");
-    
-  //       const handleResize = e => {
-  //   // draw(ctx, canvas);
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext("2d");
 
-  //     ctx.canvas.height = window.innerHeight;
-  //     ctx.canvas.width = window.innerWidth;
-  //   draw(ctx, canvas);
+    const handleResize = (e) => {
+      const handleResize = (e) => {
+        ctx.canvas.height = window.innerHeight;
+        ctx.canvas.width = window.innerWidth;
+      };
 
-  //     console.log('resize!')
-  //   };
+      handleResize();
+      draw(ctx, canvas);
+    };
 
-  //   // handleResize();
-  //   window.addEventListener("resize", handleResize);
+    window.addEventListener("resize", handleResize);
 
-  //   return () => window.removeEventListener("resize", handleResize);
-  // },[])
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -80,32 +84,21 @@ export default function Scratch() {
     });
 
     draw(ctx, canvas);
+    console.log("loaded");
     isTouchDevice();
-
-    // const handleResize = e => {
-    //   context.canvas.height = window.innerHeight;
-    //   context.canvas.width = window.innerWidth;
-    // };
-
-    // handleResize();
-    // window.addEventListener("resize", handleResize);
-
-    // return () => window.removeEventListener("resize", handleResize)
-
-    //Our draw come here
   }, []);
 
   return (
     <div className="scratchContainer">
       <canvas
-        // width="1000" height="1000"
         className="scratch--canvas"
         width={window.innerWidth}
         height={window.innerHeight}
         ref={canvasRef}
       />
 
-      <img
+{(backgroundImageLoaded) &&(
+  <img
         className="background--img"
         src={
           windowRatio < 0.75
@@ -114,6 +107,9 @@ export default function Scratch() {
         }
         alt="Painter by the Wall by Edvard Munch"
       />
+ )}
+
+      
     </div>
   );
 }

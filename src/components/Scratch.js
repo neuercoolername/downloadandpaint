@@ -1,4 +1,5 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState, useLayoutEffect  } from "react";
+
 import drawImageProp from "../utilities/drawImageProp";
 import scratch from "../utilities/drawScratch";
 
@@ -23,21 +24,25 @@ export default function Scratch() {
     mouseY = !isTouchDevice ? e.pageY : e.touches[0].pageY;
   };
 
-  function loadImage(url) {
-    return new Promise((r) => {
-      let i = new Image();
-      i.onload = () => r(i);
-      i.src = url;
-    });
-  }
+  // function loadImage(url) {
+  //   return new Promise((r) => {
+  //     let i = new Image();
+  //     i.onload = () => r(i);
+  //     i.src = url; 
+  //   });  
+  // }
+
+  
+
 
   const draw = (ctx, canvas) => {
+   
     windowRatio = window.innerHeight / window.innerWidth;
     setBackgroundImageLoaded(false);
     const img = new Image();
 
     img.onload = (res) => {
-      console.log(res);
+      // console.log(res);
       drawImageProp(ctx, img);
       setBackgroundImageLoaded(true);
       setCanvasIsLoaded(true);
@@ -47,8 +52,17 @@ export default function Scratch() {
     img.src = "./images/foreground-wide.jpg";
     // } else {
     //   img.src = "./images/foreground.jpg";
-    // }
+    // } 
   };
+
+  // useLayoutEffect (()=> {
+  //   const canvas = canvasRef.current;
+  //   const ctx = canvas.getContext("2d");
+
+    
+  //     draw(ctx, canvas);
+    
+  // }, [window.onload])
 
   // check if device is touch device
 
@@ -86,7 +100,7 @@ export default function Scratch() {
     window.addEventListener("resize", handleResize);
 
     return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  }, [draw]);
 
   // this handles touch devices
 

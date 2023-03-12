@@ -1,5 +1,5 @@
 export default function drawImageProp(ctx, img, x, y, w, h, offsetX, offsetY) {
-
+    // console.log(img)
     if (arguments.length === 2) {
         x = y = 0;
         w = ctx.canvas.width;

@@ -5,12 +5,14 @@ import scratch from "../utilities/drawScratch";
 export default function Scratch() {
   const [isTouchDevice, setIsTouchDevice] = useState(false);
   const [isDragged, setIsDragged] = useState(false);
+  const [canvasIsLoaded, setCanvasIsLoaded] = useState(false);
   const [backgroundImageLoaded, setBackgroundImageLoaded] = useState(false);
   const canvasRef = useRef(null);
 
   let windowRatio = window.innerHeight / window.innerWidth;
 
   // initial values for mouse x and y
+
   let mouseX = 0;
   let mouseY = 0;
 
@@ -21,20 +23,31 @@ export default function Scratch() {
     mouseY = !isTouchDevice ? e.pageY : e.touches[0].pageY;
   };
 
+  function loadImage(url) {
+    return new Promise((r) => {
+      let i = new Image();
+      i.onload = () => r(i);
+      i.src = url;
+    });
+  }
+
   const draw = (ctx, canvas) => {
     windowRatio = window.innerHeight / window.innerWidth;
     setBackgroundImageLoaded(false);
-    const img = new Image(); 
-    if (windowRatio < 0.75) {
-      img.src = "./images/foreground-wide.jpg";
-    } else {
-      img.src = "./images/foreground.jpg"; 
-    }
+    const img = new Image();
 
-    img.onload = () => {
+    img.onload = (res) => {
+      console.log(res);
       drawImageProp(ctx, img);
       setBackgroundImageLoaded(true);
+      setCanvasIsLoaded(true);
+      console.log(canvasIsLoaded);
     };
+    // if (windowRatio < 0.75) {
+    img.src = "./images/foreground-wide.jpg";
+    // } else {
+    //   img.src = "./images/foreground.jpg";
+    // }
   };
 
   // check if device is touch device
@@ -88,16 +101,15 @@ export default function Scratch() {
     };
 
     canvas.addEventListener(touch.down, (e) => {
-      setIsDragged(true)
-      getPosition(e)
+      setIsDragged(true);
+      getPosition(e);
       scratch(ctx, mouseX, mouseY);
     });
 
-    canvas.addEventListener(touch.move, (e)=>{
-      getPosition(e)
+    canvas.addEventListener(touch.move, (e) => {
+      getPosition(e);
       scratch(ctx, mouseX, mouseY);
-
-    })
+    });
   });
 
   // this handles the drawing by mouseover

@@ -113,7 +113,7 @@ export default function Scratch() {
       move: "touchmove",
       up: "touchstop",
     };
-
+//////
     canvas.addEventListener(touch.down, (e) => {
       setIsDragged(true);
       getPosition(e);

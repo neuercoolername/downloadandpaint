@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useEffect} from 'react';
 
 class CanvasWithImage extends Component {
   componentDidMount() {
@@ -9,7 +9,21 @@ class CanvasWithImage extends Component {
       ctx.drawImage(img, 0, 0);
     };
     img.src = './images/foreground-wide.jpg';
+
+    
   }
+
+  // useEffect(() => {
+  //   const canvas = canvasRef.current;
+  //   const ctx = canvas.getContext("2d");
+
+  //   canvas.addEventListener("mousemove", (e) => {
+  //     getPosition(e);
+  //     scratch(ctx, mouseX, mouseY);
+  //   });
+
+  //   draw(ctx, canvas);
+  // }, []);
 
   render() {
     return (

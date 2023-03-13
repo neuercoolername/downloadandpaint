@@ -43,5 +43,9 @@ export default function drawImageProp(ctx, img, x, y, w, h, offsetX, offsetY) {
     if (ch > ih) ch = ih;
 
     // fill image in dest. rectangle
-    ctx.drawImage(img, cx, cy, cw, ch,  x, y, w, h);
+    // img.onload = () =>{
+        ctx.drawImage(img, cx, cy, cw, ch,  x, y, w, h);
+
+    // }
+    
 }

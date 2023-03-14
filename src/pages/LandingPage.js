@@ -1,16 +1,27 @@
 import { useState } from "react";
 import Scratch from "../components/Scratch";
-import CanvasWithImage from "../components/Scratchv2";
 import ScratchBasic from "../components/Scratchv3";
+import ScratchCard from "../components/Scratchv2";
+import cardImage from '../foreground.jpg'
+
 
 function LandingPage() {
   const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
 
+  const settings = {
+    width: 640,
+    height: 480,
+    image: cardImage,
+    finishPercent: 50,
+    onComplete: () => console.log('The card is now clear!')
+  };
+
   return (
     <>
-      {/* <CanvasWithImage /> */}
+      <ScratchCard {...settings}>
+      </ScratchCard>
       {/* <ScratchBasic /> */}
-    <Scratch />
+    {/* <Scratch /> */}
 
     </>
   );

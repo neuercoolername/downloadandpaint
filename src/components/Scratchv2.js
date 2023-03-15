@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import drawImageProp from '../utilities/drawImageProp';
 
 class ScratchCard extends Component {
 
@@ -8,14 +9,16 @@ class ScratchCard extends Component {
   }
 
   componentDidMount() {
-    this.isDrawing = false;
-    this.lastPoint = null;
+    this.isDrawing = true;
+    // this.lastPoint = this.getMouse( this.canvas);
+    this.lastPoint = null
     this.ctx = this.canvas.getContext('2d');
 
     const image = new Image();
     image.crossOrigin = "Anonymous";
     image.onload = () => {
       this.ctx.drawImage(image, 0, 0);
+      drawImageProp(this.ctx, image);
       this.setState({ loaded: true });
     }
     image.src = this.props.image;
@@ -76,9 +79,11 @@ class ScratchCard extends Component {
   }
 
   handleMouseMove(e) {
-    if (!this.isDrawing) {
-      return;
-    }
+    // if (!this.isDrawing) {
+    //   return;
+    // } 
+    // this.lastPoint = this.getMouse(e, this.canvas);
+
 
     e.preventDefault();
 
@@ -108,9 +113,13 @@ class ScratchCard extends Component {
 
   render() {
 
+  let windowRatio = window.innerHeight / window.innerWidth;
+
+
     const containerStyle = {
-      width: this.props.width + 'px',
-      height: this.props.height + 'px',
+      // width: this.props.width + 'px',
+      width: window.innerWidth,
+      height: window.innerHeight,
       position: 'relative',
       WebkitUserSelect: 'none',
       MozUserSelect: 'none',
@@ -145,9 +154,15 @@ class ScratchCard extends Component {
     return (
       <div className="ScratchCard__Container" style={containerStyle}>
         <canvas {...canvasProps}></canvas>
-        <div className="ScratchCard__Result" style={resultStyle}>
-          {this.props.children}
-        </div>
+        <img
+          className="background--img"
+          src={
+            windowRatio < 0.75
+              ? "./images/background-wide.jpg"
+              : "./images/background.jpg"
+          }
+          alt="Painter by the Wall by Edvard Munch"
+        />
       </div>
     );
   }

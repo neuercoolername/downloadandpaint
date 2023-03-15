@@ -3,6 +3,7 @@ import Scratch from "../components/Scratch";
 import ScratchBasic from "../components/Scratchv3";
 import ScratchCard from "../components/Scratchv2";
 import cardImage from '../foreground.jpg'
+import { KonvaScratch } from "../components/KonvaScratch";
 
 
 function LandingPage() {
@@ -18,10 +19,11 @@ function LandingPage() {
 
   return (
     <>
-      <ScratchCard {...settings}>
-      </ScratchCard>
+      {/* <ScratchCard {...settings}> */}
+      {/* </ScratchCard> */}
       {/* <ScratchBasic /> */}
     {/* <Scratch /> */}
+    <KonvaScratch />
 
     </>
   );

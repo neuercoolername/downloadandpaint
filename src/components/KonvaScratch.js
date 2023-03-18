@@ -53,7 +53,7 @@ import React, { Component } from 'react';
           ref={(node) => {
             this.imageNode = node;
           }}
-        /> 
+        />
       );
     }
   }

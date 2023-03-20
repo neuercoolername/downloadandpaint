@@ -1,7 +1,6 @@
 export default function scratch  (ctx,xoff, yoff)  {
     ctx.globalCompositeOperation = "destination-out";
     ctx.beginPath();
-    // ctx.arc(xoff, yoff, 25, 0, 2 * Math.PI);
     ctx.moveTo(127 + xoff, 261 + yoff);
     ctx.moveTo(8 + xoff, 51 + yoff);
     ctx.bezierCurveTo(

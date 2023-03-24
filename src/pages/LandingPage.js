@@ -3,7 +3,7 @@ import Scratch from "../components/Scratch";
 import ScratchBasic from "../components/Scratchv3";
 import ScratchCard from "../components/Scratchv2";
 import cardImage from '../foreground.jpg'
-import { KonvaScratch } from "../components/KonvaScratch";
+import { KonvaScratch } from "../components/KonvaScratch2";
 
 
 function LandingPage() {

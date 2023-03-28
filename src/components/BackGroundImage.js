@@ -1,74 +1,19 @@
 import React, { Component, useState } from "react";
 import { Stage, Layer, Image, Line } from "react-konva";
+import { calcX, calcY } from "../utilities/calcCanvasImageSizes";
 
-
-console.log(window.innerWidth)
-
-// add another media query from 900 on
-// 
-
-  const calcX = () => {
-    if (window.innerWidth < 600) {
-        return 900
-     }
-     if (window.innerWidth < 900) {
-        return 600
-     }
-     if (window.innerWidth > 900) {
-        return 500
-     }
-  }
-
-  const calcY = () => {
-    if (window.innerWidth < 600) {
-        return 200
-     }
-     if (window.innerWidth < 900) {
-        return 300
-     }
-     if (window.innerHeight > 900)
-     {
-        return 0
-     }
-  }
-
-
-// const width = window.innerWidth;
-//     const height = window.innerHeight;
-//     const aspectRatio = width / height;
-
-//     let newWidth;
-//     let newHeight;
-
-//     const imageRatio = 1.6;
-
-//     if (aspectRatio >= imageRatio) {
-//       newWidth = window.innerWidth;
-//       newHeight = window.innerWidth / aspectRatio;
-      
-//     } else {
-//       newWidth = window.innerHeight * aspectRatio ;
-//       newHeight = window.innerHeight 
-//     }
-
-//    const x = (window.innerWidth - newWidth) / 2;
-//    const y = (window.innerHeight - newHeight) / 2;
-
-    // console.log('aspect-ratio',aspectRatio);
-    // console.log('image-ratio', imageRatio)
-    // console.log(newWidth)
+console.log(window.innerWidth);
 
 export default class BackGroundImage extends React.Component {
   state = {
-    image: null
+    image: null,
   };
 
+  // resize = () => this.forceUpdate()
 
-  
   componentDidMount() {
     this.loadImage();
-
-    
+    // window.addEventListener('resize', this.resize);
   }
   componentDidUpdate(oldProps) {
     if (oldProps.src !== this.props.src) {
@@ -77,6 +22,7 @@ export default class BackGroundImage extends React.Component {
   }
   componentWillUnmount() {
     this.image.removeEventListener("load", this.handleLoad);
+    // window.removeEventListener('resize', this.resize)
   }
   loadImage() {
     // save to "this" to remove "load" handler on unmount
@@ -95,7 +41,6 @@ export default class BackGroundImage extends React.Component {
     // this.imageNode.getLayer().batchDraw();
   };
 
-
   render() {
     return (
       <Image
@@ -103,21 +48,17 @@ export default class BackGroundImage extends React.Component {
         y={0}
         image={this.state.image}
         width={window.innerWidth}
-          height={window.innerHeight}
-        // cropX={window.innerWidth / 2}
+        height={window.innerHeight}
 
         ref={(node) => {
           this.imageNode = node;
         }}
-        crop={{
-          x: calcX(),
-          y: calcY(),
-          width: window.innerWidth,
-          height: window.innerHeight,
-        }}
-        //   fillPatternImage={this.state.fillPatternImage}
-        //   fillPatternScaleX={3}
-        // fillPatternScaleY={2}
+        // crop={{
+        //   x: calcX(),
+        //   y: calcY(),
+        //   width: window.innerWidth,
+        //   height: window.innerHeight,
+        // }}
       />
     );
   }

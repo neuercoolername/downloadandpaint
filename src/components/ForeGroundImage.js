@@ -1,30 +1,7 @@
 import React, { Component, useState } from "react";
 import { Stage, Layer, Image, Line } from "react-konva";
+import { calcX, calcY } from "../utilities/calcCanvasImageSizes";
 
-const calcX = () => {
-    if (window.innerWidth < 600) {
-        return 900
-     }
-     if (window.innerWidth < 900) {
-        return 600
-     }
-     if (window.innerWidth > 900) {
-        return 500
-     }
-  }
-
-  const calcY = () => {
-    if (window.innerWidth < 600) {
-        return 200
-     }
-     if (window.innerWidth < 900) {
-        return 300
-     }
-     if (window.innerHeight > 900)
-     {
-        return 0
-     }
-  }
 
 export default class ForeGroundImage extends React.Component {
     state = {
@@ -85,12 +62,12 @@ export default class ForeGroundImage extends React.Component {
             this.imageNode = node;
           }}
           onMousemove={this.handleMove}
-          crop={{
-          x: calcX(),
-          y: calcY(),
-          width: window.innerWidth,
-          height: window.innerHeight,
-        }}
+        //   crop={{
+        //   x: calcX(),
+        //   y: calcY(),
+        //   width: window.innerWidth,
+        //   height: window.innerHeight,
+        // }}
           // globalCompositeOperation='destination-out'
         />
       );

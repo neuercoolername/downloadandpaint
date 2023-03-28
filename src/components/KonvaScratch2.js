@@ -3,19 +3,35 @@ import { Stage, Layer, Image, Line, Shape } from "react-konva";
 import React, { Component, useState } from "react";
 import ForeGroundImage from "./ForeGroundImage";
 import BackGroundImage from "./BackGroundImage";
-import Scratch from "./Scratch";
+import Text2 from "./Headline";
 
 export const KonvaScratch = () => {
   const [tool, setTool] = React.useState("eraser");
   const [lines, setLines] = React.useState([]);
   const isDrawing = React.useRef(true);
-
-  console.log(lines)
-
+  const [dimensions, setDimensions] = React.useState({
+    height: window.innerHeight,
+    width: window.innerWidth,
+  });
 
   const width = window.innerWidth;
   const height = window.innerHeight;
   const aspectRatio = width / height;
+
+  React.useEffect(() => {
+    function handleResize() {
+      setDimensions({
+        height: window.innerHeight,
+        width: window.innerWidth,
+      });
+    }
+
+    window.addEventListener("resize", handleResize);
+
+    return (_) => {
+      window.removeEventListener("resize", handleResize);
+    };
+  });
 
   // const handleMouseMove = (e) => {
   //   // isDrawing.current = true;
@@ -36,7 +52,6 @@ export const KonvaScratch = () => {
   // };
 
   const handleMouseMove = (e) => {
-
     isDrawing.current = true;
     const pos = e.target.getStage().getPointerPosition();
     setLines([...lines, { tool, points: [pos.x, pos.y] }]);
@@ -49,14 +64,10 @@ export const KonvaScratch = () => {
     // add point
     lastLine.points = lastLine.points.concat([point.x, point.y]);
 
-
     // replace last
     lines.splice(lines.length - 1, 1, lastLine);
     setLines(lines.concat());
   };
-
-
-
 
   return (
     // Stage - is a div wrapper
@@ -67,6 +78,7 @@ export const KonvaScratch = () => {
       height={window.innerHeight}
       onMousemove={handleMouseMove}
     >
+
       <Layer className="konvaBackground">
         <BackGroundImage
           src={
@@ -75,6 +87,9 @@ export const KonvaScratch = () => {
               : "./images/background.jpg"
           }
         />
+
+      <Text2/>
+
       </Layer>
 
       <Layer>
@@ -85,6 +100,7 @@ export const KonvaScratch = () => {
               : "./images/foreground.jpg"
           }
         />
+
         {/* {lines.map((line, i) => (
           <Shape
             sceneFunc={(context, shape) => {
@@ -110,7 +126,7 @@ export const KonvaScratch = () => {
             key={i}
             points={line.points}
             stroke="#df4b26"
-            strokeWidth={50}
+            strokeWidth={200}
             tension={0.5}
             lineCap="round"
             lineJoin="round"

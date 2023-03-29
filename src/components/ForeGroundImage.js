@@ -1,5 +1,5 @@
 import React, { Component, useState } from "react";
-import { Stage, Layer, Image, Line } from "react-konva";
+import { Stage, Layer, Image, Line, Rect } from "react-konva";
 import { calcX, calcY } from "../utilities/calcCanvasImageSizes";
 
 
@@ -52,16 +52,16 @@ export default class ForeGroundImage extends React.Component {
     // };
     render() {
       return (
-        <Image
-          x={0}
-          y={0}
-          image={this.state.image}
-          width={window.innerWidth}
-          height={window.innerHeight}
-          ref={(node) => {
-            this.imageNode = node;
-          }}
-          onMousemove={this.handleMove}
+        // <Image
+          // x={0}
+          // y={0}
+          // image={this.state.image}
+          // width={window.innerWidth}
+          // height={window.innerHeight}
+          // ref={(node) => {
+          //   this.imageNode = node;
+          // }}
+          // onMousemove={this.handleMove}
         //   crop={{
         //   x: calcX(),
         //   y: calcY(),
@@ -69,7 +69,14 @@ export default class ForeGroundImage extends React.Component {
         //   height: window.innerHeight,
         // }}
           // globalCompositeOperation='destination-out'
-        />
+        // />
+                <Rect
+  width={window.innerWidth}
+  height={window.innerHeight}
+  shadowBlur={20}
+  cornerRadius={10}
+  fillPatternImage={this.state.image}
+/>
       );
     }
   }

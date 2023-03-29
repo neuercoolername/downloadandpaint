@@ -49,3 +49,8 @@ body,html {
   padding:0;
 
 }
+
+
+.konvaImage {
+  width: 100px !important;
+}

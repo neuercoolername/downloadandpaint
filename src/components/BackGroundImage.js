@@ -1,5 +1,5 @@
 import React, { Component, useState } from "react";
-import { Stage, Layer, Image, Line } from "react-konva";
+import { Stage, Layer, Image, Line, Rect } from "react-konva";
 import { calcX, calcY } from "../utilities/calcCanvasImageSizes";
 
 console.log(window.innerWidth);
@@ -43,23 +43,15 @@ export default class BackGroundImage extends React.Component {
 
   render() {
     return (
-      <Image
-        x={0}
-        y={0}
-        image={this.state.image}
-        width={window.innerWidth}
-        height={window.innerHeight}
 
-        ref={(node) => {
-          this.imageNode = node;
-        }}
-        // crop={{
-        //   x: calcX(),
-        //   y: calcY(),
-        //   width: window.innerWidth,
-        //   height: window.innerHeight,
-        // }}
-      />
+        <Rect
+  width={window.innerWidth}
+  height={window.innerHeight}
+  shadowBlur={20}
+  cornerRadius={10}
+  fillPatternImage={this.state.image}
+/>
+
     );
   }
 }

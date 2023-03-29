@@ -79,7 +79,7 @@ export const KonvaScratch = () => {
       onMousemove={handleMouseMove}
     >
 
-      <Layer className="konvaBackground">
+      <Layer className="konvaBackground" >
         <BackGroundImage
           src={
             window.innerWidth > 900

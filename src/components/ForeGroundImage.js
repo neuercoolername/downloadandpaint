@@ -1,6 +1,5 @@
-import React, { Component, useState } from "react";
-import { Stage, Layer, Image, Line, Rect } from "react-konva";
-import { calcX, calcY } from "../utilities/calcCanvasImageSizes";
+import React from "react";
+import { Rect } from "react-konva";
 
 export default class ForeGroundImage extends React.Component {
   state = {

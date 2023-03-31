@@ -1,18 +1,5 @@
-import React, { Component } from "react";
-import { render } from "react-dom";
-import { Stage, Layer, Image, Rect } from "react-konva";
-import { calcX, calcY } from "../utilities/calcCanvasImageSizes";
-
-// let fontSizeHeading;
-
-// let lineHightHeading;
-
-// if (window.innerWidth > 1500) {
-//   fontSizeHeading = 300;
-//   lineHightHeading = 300;
-// }
-
-console.log(window.innerWidth);
+import React from "react";
+import { Rect } from "react-konva";
 
 export default class Text2 extends React.Component {
   state = {
@@ -22,6 +9,8 @@ export default class Text2 extends React.Component {
     fontSizeHeading: null,
     lineHightHeading: null,
   };
+
+  // sudo-media-queries for the text
 
   componentDidMount() {
     if (window.innerWidth < 576) {
@@ -68,7 +57,6 @@ export default class Text2 extends React.Component {
 
       // put text on canvas
       ctx.font = `normal 600 ${this.state.fontSizeHeading}px Arial`;
-      // ctx.fillText(this.state.text, 0, 500);
       this.state.textsplit.forEach((element, i) => {
         ctx.fillText(
           element,
@@ -98,7 +86,6 @@ export default class Text2 extends React.Component {
         width={window.innerWidth}
         height={window.innerHeight}
         fillPatternImage={this.state.canvas}
-        // fillPatternOffset={window.innerWidth > 900 ? {x:(window.innerWidth / 3),y:200} : {x:(window.innerWidth / 1.5),y:200}}
       />
     );
   };

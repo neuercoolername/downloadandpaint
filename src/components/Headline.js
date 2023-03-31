@@ -1,6 +1,17 @@
 import React from "react";
 import { Rect } from "react-konva";
 
+// sudo-media-queries for the text
+
+
+const fontSizeLineHeight = {
+  576: { fontSize: 50, lineHeight: 50 },
+  768: { fontSize: 100, lineHeight: 100 },
+  1000: { fontSize: 160, lineHeight: 150 },
+  1400: { fontSize: 200, lineHeight: 180 },
+  Infinity: { fontSize: 300, lineHeight: 300 },
+};
+
 export default class Text2 extends React.Component {
   state = {
     text: "Download and Paint",
@@ -10,41 +21,16 @@ export default class Text2 extends React.Component {
     lineHightHeading: null,
   };
 
-  // sudo-media-queries for the text
 
-  componentDidMount() {
-    if (window.innerWidth < 576) {
-      this.setState({
-        fontSizeHeading: 50,
-        lineHightHeading: 50,
-      });
-    }
-    if (window.innerWidth > 576) {
-      this.setState({
-        fontSizeHeading: 100,
-        lineHightHeading: 100,
-      });
-    }
-    if (window.innerWidth > 768) {
-      this.setState({
-        fontSizeHeading: 160,
-        lineHightHeading: 150,
-      });
-    }
-    if (window.innerWidth > 1000) {
-      this.setState({
-        fontSizeHeading: 200,
-        lineHightHeading: 180,
-      });
-    }
-    if (window.innerWidth > 1400) {
-      this.setState({
-        fontSizeHeading: 300,
-        lineHightHeading: 300,
-      });
-    }
+  calcFontSize() {
+    const { innerWidth } = window;
+    const { fontSize, lineHeight } =
+      fontSizeLineHeight[
+        Object.keys(fontSizeLineHeight).find((key) => innerWidth <= Number(key))
+      ];
+    this.setState({ fontSizeHeading: fontSize, lineHightHeading: lineHeight });
 
-    var image = new window.Image();
+    const image = new window.Image();
     image.onload = () => {
       const canvas = document.createElement("canvas");
       const ctx = canvas.getContext("2d");
@@ -78,6 +64,24 @@ export default class Text2 extends React.Component {
       });
     };
     image.src = "./images/foreground-wide.jpg";
+  }
+
+  componentDidMount() {
+    this.calcFontSize();
+
+    const resizeHandler = () => {
+      this.calcFontSize();
+    };
+
+    window.addEventListener("resize", resizeHandler);
+    this.resizeHandler = resizeHandler;
+
+    console.log(this.state.fontSizeHeading);
+  }
+
+
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.resizeHandler);
   }
 
   render = () => {

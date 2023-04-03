@@ -4,7 +4,7 @@ import { Rect } from "react-konva";
 // sudo-media-queries for the text
 
 const fontSizeLineHeight = {
-  576: { fontSize: 60, lineHeight: 50 },
+  576: { fontSize: 60, lineHeight: 70 },
   768: { fontSize: 100, lineHeight: 100 },
   1000: { fontSize: 160, lineHeight: 150 },
   1400: { fontSize: 200, lineHeight: 180 },

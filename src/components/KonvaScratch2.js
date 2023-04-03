@@ -93,7 +93,7 @@ export const KonvaScratch = () => {
             key={i}
             points={line.points}
             stroke="#df4b26"
-            strokeWidth={200}
+            strokeWidth={window.innerWidth < 576 ? 100 : 200 }
             tension={0.5}
             lineCap="round"
             lineJoin="round"

@@ -4,7 +4,7 @@ import { Rect } from "react-konva";
 // sudo-media-queries for the text
 
 const fontSizeLineHeight = {
-  576: { fontSize: 50, lineHeight: 50 },
+  576: { fontSize: 60, lineHeight: 50 },
   768: { fontSize: 100, lineHeight: 100 },
   1000: { fontSize: 160, lineHeight: 150 },
   1400: { fontSize: 200, lineHeight: 180 },
@@ -26,7 +26,7 @@ export default class Text2 extends React.Component {
       fontSizeLineHeight[
         Object.keys(fontSizeLineHeight).find((key) => innerWidth <= Number(key))
       ];
-    this.setState({ fontSizeHeading: fontSize, lineHightHeading: lineHeight });
+    this.setState({ fontSizeHeading: fontSize, lineHightHeading: lineHeight});
 
     const image = new window.Image();
     image.onload = () => {
@@ -44,8 +44,8 @@ export default class Text2 extends React.Component {
       this.state.textsplit.forEach((element, i) => {
         ctx.fillText(
           element,
-          0,
-          this.state.lineHightHeading * i + this.state.lineHightHeading
+          20,
+         20 + (this.state.lineHightHeading * i + this.state.lineHightHeading) 
         );
       });
       ctx.fill();

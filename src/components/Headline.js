@@ -11,7 +11,7 @@ const fontSizeLineHeight = {
   Infinity: { fontSize: 300, lineHeight: 300 },
 };
 
-export default class Text2 extends React.Component {
+export default class Headline extends React.Component {
   state = {
     text: "Download and Paint",
     canvas: null,

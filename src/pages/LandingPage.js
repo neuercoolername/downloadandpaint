@@ -1,15 +1,14 @@
-import { Stage, Layer, Line,  } from "react-konva";
+import { Stage, Layer, Line } from "react-konva";
 import React, { useState } from "react";
 import ForeGroundImage from "../components/ForeGroundImage";
 import BackGroundImage from "../components/BackGroundImage";
-import Text2 from "../components/Headline";
+import Headline from "../components/Headline";
 
 const LandingPage = () => {
   const [lines, setLines] = useState([]);
-  const isDrawing = React.useRef(true);
+  const isDrawing = React.useRef(false);
 
-
-// eslint-disable-next-line
+  // eslint-disable-next-line
   const [dimensions, setDimensions] = useState({
     height: window.innerHeight,
     width: window.innerWidth,
@@ -30,6 +29,8 @@ const LandingPage = () => {
     };
   });
 
+
+
   const handleMouseMove = (e) => {
     isDrawing.current = true;
     const pos = e.target.getStage().getPointerPosition();
@@ -44,19 +45,27 @@ const LandingPage = () => {
     setLines(lines.concat());
   };
 
-  
-  const handleTouchMove = (e) => {
+  const handleTouchStart = (e) => {
     isDrawing.current = true;
-    const pos = e.target.getStage().getPointerPosition();
-    setLines([...lines, { points: [pos.x, pos.y] }]);
-
     const stage = e.target.getStage();
     const point = stage.getPointerPosition();
-    let lastLine = lines[lines.length - 1];
-    lastLine.points = lastLine.points.concat([point.x, point.y]);
-
-    lines.splice(lines.length - 1, 1, lastLine);
-    setLines(lines.concat());
+    setLines([...lines, { points: [point.x, point.y] }]);
+  };
+  
+  const handleTouchMove = (e) => {
+    if (isDrawing.current) {
+      const stage = e.target.getStage();
+      const point = stage.getPointerPosition();
+      const lastLine = lines[lines.length - 1];
+      lastLine.points = lastLine.points.concat([point.x, point.y]);
+      lines.splice(lines.length - 1, 1, lastLine);
+      setLines([...lines]);
+    }
+  };
+  
+  const handleTouchEnd = () => {
+    isDrawing.current = false;
+    setLines([...lines, { points: [] }]);
   };
 
   return (
@@ -65,7 +74,8 @@ const LandingPage = () => {
       height={window.innerHeight}
       onMousemove={handleMouseMove}
       onTouchMove={handleTouchMove}
-
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
     >
       <Layer className="konvaBackground">
         <BackGroundImage
@@ -75,8 +85,7 @@ const LandingPage = () => {
               : "./images/background.jpg"
           }
         />
-
-        <Text2 />
+        <Headline />
       </Layer>
 
       <Layer>
@@ -93,7 +102,7 @@ const LandingPage = () => {
             key={i}
             points={line.points}
             stroke="#df4b26"
-            strokeWidth={window.innerWidth < 576 ? 100 : 200 }
+            strokeWidth={window.innerWidth < 576 ? 100 : 200}
             tension={0.5}
             lineCap="round"
             lineJoin="round"
@@ -105,4 +114,4 @@ const LandingPage = () => {
   );
 };
 
-export default LandingPage
+export default LandingPage;

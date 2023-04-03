@@ -73,7 +73,10 @@ export default class Text2 extends React.Component {
         canvas: canvas,
       });
     };
-    image.src = "./images/foreground-wide.jpg";
+    image.src =
+      window.innerWidth > 900
+        ? "./images/foreground-wide.jpg"
+        : "./images/foreground.jpg";
   }
 
   componentDidMount() {

@@ -29,8 +29,6 @@ const LandingPage = () => {
     };
   });
 
-
-
   const handleMouseMove = (e) => {
     isDrawing.current = true;
     const pos = e.target.getStage().getPointerPosition();
@@ -51,7 +49,7 @@ const LandingPage = () => {
     const point = stage.getPointerPosition();
     setLines([...lines, { points: [point.x, point.y] }]);
   };
-  
+
   const handleTouchMove = (e) => {
     if (isDrawing.current) {
       const stage = e.target.getStage();
@@ -62,7 +60,7 @@ const LandingPage = () => {
       setLines([...lines]);
     }
   };
-  
+
   const handleTouchEnd = () => {
     isDrawing.current = false;
     setLines([...lines, { points: [] }]);

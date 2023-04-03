@@ -26,7 +26,7 @@ export default class Text2 extends React.Component {
       fontSizeLineHeight[
         Object.keys(fontSizeLineHeight).find((key) => innerWidth <= Number(key))
       ];
-    this.setState({ fontSizeHeading: fontSize, lineHightHeading: lineHeight});
+    this.setState({ fontSizeHeading: fontSize, lineHightHeading: lineHeight });
 
     const image = new window.Image();
     image.onload = () => {
@@ -44,8 +44,20 @@ export default class Text2 extends React.Component {
       this.state.textsplit.forEach((element, i) => {
         ctx.fillText(
           element,
-          20,
-         20 + (this.state.lineHightHeading * i + this.state.lineHightHeading + window.innerHeight / 3.5) 
+          window.innerWidth < 576
+            ? Math.max(
+                window.innerWidth < 360
+                  ? 20
+                  : Math.min(window.innerWidth / 6, 100),
+                0
+              )
+            : 0,
+          window.innerWidth < 576
+            ? 20 +
+                (this.state.lineHightHeading * i +
+                  this.state.lineHightHeading +
+                  window.innerHeight / 3.5)
+            : this.state.lineHightHeading * i + this.state.lineHightHeading
         );
       });
       ctx.fill();

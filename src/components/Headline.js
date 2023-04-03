@@ -45,7 +45,7 @@ export default class Text2 extends React.Component {
         ctx.fillText(
           element,
           20,
-         20 + (this.state.lineHightHeading * i + this.state.lineHightHeading) 
+         20 + (this.state.lineHightHeading * i + this.state.lineHightHeading + window.innerHeight / 3.5) 
         );
       });
       ctx.fill();

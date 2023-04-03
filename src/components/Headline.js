@@ -3,7 +3,6 @@ import { Rect } from "react-konva";
 
 // sudo-media-queries for the text
 
-
 const fontSizeLineHeight = {
   576: { fontSize: 50, lineHeight: 50 },
   768: { fontSize: 100, lineHeight: 100 },
@@ -20,7 +19,6 @@ export default class Text2 extends React.Component {
     fontSizeHeading: null,
     lineHightHeading: null,
   };
-
 
   calcFontSize() {
     const { innerWidth } = window;
@@ -75,10 +73,7 @@ export default class Text2 extends React.Component {
 
     window.addEventListener("resize", resizeHandler);
     this.resizeHandler = resizeHandler;
-
-    console.log(this.state.fontSizeHeading);
   }
-
 
   componentWillUnmount() {
     window.removeEventListener("resize", this.resizeHandler);

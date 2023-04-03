@@ -44,11 +44,28 @@ export const KonvaScratch = () => {
     setLines(lines.concat());
   };
 
+  
+  const handleTouchMove = (e) => {
+    isDrawing.current = true;
+    const pos = e.target.getStage().getPointerPosition();
+    setLines([...lines, { points: [pos.x, pos.y] }]);
+
+    const stage = e.target.getStage();
+    const point = stage.getPointerPosition();
+    let lastLine = lines[lines.length - 1];
+    lastLine.points = lastLine.points.concat([point.x, point.y]);
+
+    lines.splice(lines.length - 1, 1, lastLine);
+    setLines(lines.concat());
+  };
+
   return (
     <Stage
       width={window.innerWidth}
       height={window.innerHeight}
       onMousemove={handleMouseMove}
+      onTouchMove={handleTouchMove}
+
     >
       <Layer className="konvaBackground">
         <BackGroundImage

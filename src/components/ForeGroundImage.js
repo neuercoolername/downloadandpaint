@@ -10,7 +10,6 @@ export default class ForeGroundImage extends React.Component {
   };
   componentDidMount() {
     this.loadImage();
-    // window.addEventListener('onMousemove', this.handleVisible);
   }
   componentDidUpdate(oldProps) {
     if (oldProps.src !== this.props.src) {

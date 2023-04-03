@@ -47,8 +47,8 @@ export default class Headline extends React.Component {
           window.innerWidth < 576
             ? Math.max(
                 window.innerWidth < 360
-                  ? 20
-                  : Math.min(window.innerWidth / 6, 100),
+                  ? 10
+                  : Math.min(window.innerWidth / 12, 100),
                 0
               )
             : 0,

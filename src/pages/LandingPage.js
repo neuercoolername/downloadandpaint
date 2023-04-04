@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import ForeGroundImage from "../components/ForeGroundImage";
 import BackGroundImage from "../components/BackGroundImage";
 import Headline from "../components/Headline";
+import Starttext from "../components/StartText";
 
 const LandingPage = () => {
   const [lines, setLines] = useState([]);
@@ -84,6 +85,7 @@ const LandingPage = () => {
           }
         />
         <Headline />
+        <Starttext />
       </Layer>
 
       <Layer>

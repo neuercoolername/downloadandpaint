@@ -19,7 +19,7 @@ export default class Starttext extends React.Component {
         576: { x: 60, y: 70 },
         768: { x: 100, y: 100 },
         1000: { x: 140, y: 150 },
-        1400: { x: 1000, y: 1000 },
+        1400: { x: window.innerWidth / 2, y: this.state.lineHightHeading ? this.state.lineHightHeading * 2 + this.state.lineHightHeading : 1000 },
         Infinity: { x: window.innerWidth / 2, y: this.state.lineHightHeading ? this.state.lineHightHeading * 2 + this.state.lineHightHeading : 1000 },
     }
 

@@ -85,7 +85,7 @@ const LandingPage = () => {
           }
         />
         <Headline />
-        <Starttext />
+        {/* <Starttext /> */}
       </Layer>
 
       <Layer>

@@ -1,5 +1,9 @@
 export default function StartText2 () {
-    return (<h1 className="startText">
-        Start
-    </h1>)
+    return (
+        <>
+    <div className='startText startText--shadow'>Start</div>
+    <div className='startText startText--text'>Start</div>
+
+        </>
+    )
 }

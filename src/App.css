@@ -54,3 +54,14 @@ body,html {
 .konvaImage {
   width: 100px !important;
 }
+
+.startText {
+  position: absolute;
+  bottom:0;
+  /* margin-bottom: auto; */
+  /* margin-left: auto; */
+  /* margin-right: auto; */
+  left: 0;
+  right: 0;
+  text-align: center;
+}

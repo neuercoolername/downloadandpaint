@@ -4,6 +4,7 @@ import ForeGroundImage from "../components/ForeGroundImage";
 import BackGroundImage from "../components/BackGroundImage";
 import Headline from "../components/Headline";
 import Starttext from "../components/StartText";
+import StartText2 from "../components/StartText2";
 import startPosition from "../utilities/drawStartPosition";
 
 const LandingPage = () => {
@@ -70,6 +71,8 @@ const LandingPage = () => {
   };
 
   return (
+    <>
+
     <Stage
       width={window.innerWidth}
       height={window.innerHeight}
@@ -88,8 +91,9 @@ const LandingPage = () => {
         />
         <Headline />
         {/* <Starttext /> */}
+        
       </Layer>
-
+      
       <Layer>
         <ForeGroundImage
           src={
@@ -113,6 +117,9 @@ const LandingPage = () => {
         ))}
       </Layer>
     </Stage>
+    <StartText2 />
+
+    </>
   );
 };
 

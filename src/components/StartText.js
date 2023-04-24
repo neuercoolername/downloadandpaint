@@ -2,8 +2,6 @@ import React from "react";
 import { Rect } from "react-konva";
 import fontSizeLineHeight from "../utilities/calcFontSizeLineHeight";
 
-
-
 export default class Starttext extends React.Component {
   state = {
     text: "Start",
@@ -16,13 +14,22 @@ export default class Starttext extends React.Component {
 
   calcFontSize() {
     const textPosition = {
-        576: { x: 60, y: 70 },
-        768: { x: 100, y: 100 },
-        1000: { x: 140, y: 150 },
-        1400: { x: window.innerWidth / 2, y: this.state.lineHightHeading ? this.state.lineHightHeading * 2 + this.state.lineHightHeading : 1000 },
-        Infinity: { x: window.innerWidth / 2, y: this.state.lineHightHeading ? this.state.lineHightHeading * 2 + this.state.lineHightHeading : 1000 },
-    }
-
+      576: { x: 60, y: 70 },
+      768: { x: 100, y: 100 },
+      1000: { x: 140, y: 150 },
+      1400: {
+        x: window.innerWidth / 2,
+        y: this.state.lineHightHeading
+          ? this.state.lineHightHeading * 2 + this.state.lineHightHeading
+          : 1000,
+      },
+      Infinity: {
+        x: window.innerWidth / 2,
+        y: this.state.lineHightHeading
+          ? this.state.lineHightHeading * 2 + this.state.lineHightHeading
+          : 1000,
+      },
+    };
 
     const { innerWidth } = window;
     const { fontSize, lineHeight } =
@@ -32,12 +39,12 @@ export default class Starttext extends React.Component {
     this.setState({ fontSizeHeading: fontSize, lineHightHeading: lineHeight });
 
     const { x, y } =
-    textPosition[
-      Object.keys(textPosition).find((key) => innerWidth <= Number(key))
-    ];
-  this.setState({ textPositionX: x, textPositionY: y });
+      textPosition[
+        Object.keys(textPosition).find((key) => innerWidth <= Number(key))
+      ];
+    this.setState({ textPositionX: x, textPositionY: y });
 
-    console.log(this.state.textPositionX)
+    console.log(this.state.textPositionX);
 
     const image = new window.Image();
     image.onload = () => {
@@ -54,7 +61,9 @@ export default class Starttext extends React.Component {
       ctx.font = `normal 1000 ${this.state.fontSizeHeading}px Arial`;
 
       ctx.fillText(
-        this.state.text,  this.state.textPositionX , this.state.textPositionY
+        this.state.text,
+        this.state.textPositionX,
+        this.state.textPositionY
       );
 
       ctx.fill();

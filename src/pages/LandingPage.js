@@ -4,10 +4,12 @@ import ForeGroundImage from "../components/ForeGroundImage";
 import BackGroundImage from "../components/BackGroundImage";
 import Headline from "../components/Headline";
 import Starttext from "../components/StartText";
+import startPosition from "../utilities/drawStartPosition";
 
 const LandingPage = () => {
-  const [lines, setLines] = useState([]);
+  const [lines, setLines] = useState([startPosition]);
   const isDrawing = React.useRef(false);
+
 
   // eslint-disable-next-line
   const [dimensions, setDimensions] = useState({
@@ -37,7 +39,7 @@ const LandingPage = () => {
 
     const stage = e.target.getStage();
     const point = stage.getPointerPosition();
-    let lastLine = lines[lines.length - 1];
+    let lastLine = lines.length === 1 ? null : lines[lines.length - 1];
     lastLine.points = lastLine.points.concat([point.x, point.y]);
 
     lines.splice(lines.length - 1, 1, lastLine);

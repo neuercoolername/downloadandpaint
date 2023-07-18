@@ -60,25 +60,17 @@ body,html {
   bottom:15%;
   /* margin-bottom: auto; */
   margin-left: auto;
-  margin-right: 15%;
+  /* margin-right: 50%; */
   left: 0;
   right: 0;
   text-align: center;
-  font-size: 100px;
-  width: 1px;
+  /* font-size: 100px; */
+  width: auto;
   height: 1px;
   /* pointer-events: none; */
   cursor: pointer;
-}
-
-.startText--shadow {
-  color: transparent;
-  text-shadow: 7px 7px white;
-}
-
-.startText--text {
-  color: transparent;
+  font: 800 60px Helvetica;
   -webkit-text-fill-color: transparent;
-  -webkit-background-clip: text;
-  background-clip: text;
+  -webkit-text-stroke: 1px;
 }
+

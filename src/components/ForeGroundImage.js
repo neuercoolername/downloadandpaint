@@ -45,7 +45,6 @@ export default class ForeGroundImage extends React.Component {
         cornerRadius={10}
         fillPatternImage={this.state.image}
         // fillPatternOffset={window.innerWidth > 900 ? {x:(window.innerWidth / 3),y:200} : {x:(window.innerWidth / 1.5),y:200}}
-
       />
     );
   }

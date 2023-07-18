@@ -1,6 +1,5 @@
 import React from "react";
-import {  Rect } from "react-konva";
-
+import { Rect } from "react-konva";
 
 export default class BackGroundImage extends React.Component {
   state = {

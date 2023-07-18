@@ -3,14 +3,12 @@ import React, { useState } from "react";
 import ForeGroundImage from "../components/ForeGroundImage";
 import BackGroundImage from "../components/BackGroundImage";
 import Headline from "../components/Headline";
-import Starttext from "../components/StartText";
 import StartText2 from "../components/StartText2";
 import startPosition from "../utilities/drawStartPosition";
 
 const LandingPage = () => {
   const [lines, setLines] = useState([startPosition]);
   const isDrawing = React.useRef(false);
-
 
   // eslint-disable-next-line
   const [dimensions, setDimensions] = useState({
@@ -72,53 +70,49 @@ const LandingPage = () => {
 
   return (
     <>
-
-    <Stage
-      width={window.innerWidth}
-      height={window.innerHeight}
-      onMousemove={handleMouseMove}
-      onTouchMove={handleTouchMove}
-      onTouchStart={handleTouchStart}
-      onTouchEnd={handleTouchEnd}
-    >
-      <Layer className="konvaBackground">
-        <BackGroundImage
-          src={
-            window.innerWidth > 900
-              ? "./images/background-wide.jpg"
-              : "./images/background.jpg"
-          }
-        />
-        <Headline />
-        {/* <Starttext /> */}
-        
-      </Layer>
-      
-      <Layer>
-        <ForeGroundImage
-          src={
-            window.innerWidth > 900
-              ? "./images/foreground-wide.jpg"
-              : "./images/foreground.jpg"
-          }
-        />
-
-        {lines.map((line, i) => (
-          <Line
-            key={i}
-            points={line.points}
-            stroke="#df4b26"
-            strokeWidth={window.innerWidth < 576 ? 100 : 200}
-            tension={0.5}
-            lineCap="round"
-            lineJoin="round"
-            globalCompositeOperation="destination-out"
+      <Stage
+        width={window.innerWidth}
+        height={window.innerHeight}
+        onMousemove={handleMouseMove}
+        onTouchMove={handleTouchMove}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+      >
+        <Layer className="konvaBackground">
+          <BackGroundImage
+            src={
+              window.innerWidth > 900
+                ? "./images/background-wide.jpg"
+                : "./images/background.jpg"
+            }
           />
-        ))}
-      </Layer>
-    </Stage>
-    <StartText2 />
+          <Headline />
+        </Layer>
 
+        <Layer>
+          <ForeGroundImage
+            src={
+              window.innerWidth > 900
+                ? "./images/foreground-wide.jpg"
+                : "./images/foreground.jpg"
+            }
+          />
+
+          {lines.map((line, i) => (
+            <Line
+              key={i}
+              points={line.points}
+              stroke="#df4b26"
+              strokeWidth={window.innerWidth < 576 ? 100 : 200}
+              tension={0.5}
+              lineCap="round"
+              lineJoin="round"
+              globalCompositeOperation="destination-out"
+            />
+          ))}
+        </Layer>
+      </Stage>
+      <StartText2 />
     </>
   );
 };

@@ -1,8 +1,8 @@
-body,html {
+body,
+html {
   margin: 0;
   padding: 0;
-  overflow: hidden
-
+  overflow: hidden;
 }
 * {
   box-sizing: border-box;
@@ -23,11 +23,10 @@ body,html {
   }
 }
 
-
 /* Background of Scratch Component */
 
 .scratchContainer {
-  overflow: hidden
+  overflow: hidden;
 }
 
 .background--img {
@@ -36,20 +35,17 @@ body,html {
   position: absolute;
   object-fit: cover;
   /* object-position: 0% 10%; */
-  top:0;
-  left:0;
+  top: 0;
+  left: 0;
   z-index: -1;
-  margin:0;
-  padding:0;
-
+  margin: 0;
+  padding: 0;
 }
 
 .scratch--canvas {
-  margin:0;
-  padding:0;
-
+  margin: 0;
+  padding: 0;
 }
-
 
 .konvaImage {
   width: 100px !important;
@@ -57,7 +53,7 @@ body,html {
 
 .startText {
   position: absolute;
-  bottom:15%;
+  bottom: 15%;
   /* margin-bottom: auto; */
   margin-left: auto;
   /* margin-right: 50%; */
@@ -73,4 +69,3 @@ body,html {
   -webkit-text-fill-color: transparent;
   -webkit-text-stroke: 1px;
 }
-

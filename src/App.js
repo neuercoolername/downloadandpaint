@@ -1,6 +1,8 @@
-import './App.css';
-import LandingPage from './pages/LandingPage';
-import { useEffect } from 'react';
+import "./App.css";
+import LandingPage from "./pages/LandingPage";
+import { useEffect } from "react";
+import Navbar from "./components/Navbar";
+import { Routes, Route } from "react-router-dom";
 
 function App() {
   useEffect(() => {
@@ -16,7 +18,13 @@ function App() {
   }, []);
 
   return (
-    < LandingPage />
+    <>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+      </Routes>
+
+    </>
   );
 }
 

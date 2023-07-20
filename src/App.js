@@ -1,7 +1,6 @@
 import "./App.css";
-import LandingPage from "./pages/LandingPage";
 import { useEffect } from "react";
-import Navbar from "./components/Navbar";
+import Navbar from "./components/NavBar/Navbar";
 import { Routes, Route } from "react-router-dom";
 import FullPageWrapper from "./FullPageWrapper/FullPageWrapper";
 
@@ -20,9 +19,8 @@ function App() {
 
   return (
     <>
-      <Navbar />
+      {/* <Navbar /> */}
       <Routes>
-        {/* <Route path="/" element={<LandingPage />} /> */}
         <Route path="/" element={<FullPageWrapper />} />
       </Routes>
     </>

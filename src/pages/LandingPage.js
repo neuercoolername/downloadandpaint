@@ -1,10 +1,11 @@
 import { Stage, Layer, Line } from "react-konva";
 import React, { useState } from "react";
-import ForeGroundImage from "../components/ForeGroundImage";
-import BackGroundImage from "../components/BackGroundImage";
-import Headline from "../components/Headline";
-import StartText2 from "../components/StartText2";
+import ForeGroundImage from "../components/LandingPage/ForeGroundImage";
+import BackGroundImage from "../components/LandingPage/BackGroundImage";
+import Headline from "../components/LandingPage/Headline";
+import StartText2 from "../components/LandingPage/StartText2";
 import startPosition from "../utilities/drawStartPosition";
+import Navbar from "../components/NavBar/Navbar";
 
 const LandingPage = () => {
   const [lines, setLines] = useState([startPosition]);

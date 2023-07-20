@@ -1,6 +1,6 @@
 import React from "react";
 import { Rect } from "react-konva";
-import fontSizeLineHeight from "../utilities/calcFontSizeLineHeight";
+import fontSizeLineHeight from "../../utilities/calcFontSizeLineHeight";
 
 export default class Headline extends React.Component {
   state = {

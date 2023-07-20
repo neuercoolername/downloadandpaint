@@ -1,0 +1,17 @@
+.navbar {
+  z-index: 9000;
+  position: relative;
+  top: 60px;
+  color: white;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  font-size: 30px;
+  list-style: none;
+  margin-left: 25px;
+  margin-right: 20px;
+}
+
+.navbar li {
+  padding-right: 20px;
+}

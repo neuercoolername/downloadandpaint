@@ -1,6 +1,5 @@
 import "./App.css";
 import { useEffect } from "react";
-import Navbar from "./components/NavBar/Navbar";
 import { Routes, Route } from "react-router-dom";
 import FullPageWrapper from "./FullPageWrapper/FullPageWrapper";
 

@@ -5,7 +5,6 @@ import BackGroundImage from "../components/LandingPage/BackGroundImage";
 import Headline from "../components/LandingPage/Headline";
 import StartText2 from "../components/LandingPage/StartText2";
 import startPosition from "../utilities/drawStartPosition";
-import Navbar from "../components/NavBar/Navbar";
 
 const LandingPage = () => {
   const [lines, setLines] = useState([startPosition]);

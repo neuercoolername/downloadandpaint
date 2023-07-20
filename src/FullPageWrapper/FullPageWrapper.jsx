@@ -4,8 +4,6 @@ import Navbar from "../components/NavBar/Navbar";
 
 const isMobileView = window.innerWidth <= 767;
 
-const fullpages = [<LandingPage />, "hi"];
-
 const contentArray = [
   {
     id: 1,

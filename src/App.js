@@ -1,7 +1,7 @@
 import "./App.css";
 import { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
-import FullPageWrapper from "./FullPageWrapper/FullPageWrapper";
+import FullPageWrapper from "./components/FullPageWrapper/FullPageWrapper";
 
 function App() {
   useEffect(() => {
@@ -18,7 +18,6 @@ function App() {
 
   return (
     <>
-      {/* <Navbar /> */}
       <Routes>
         <Route path="/" element={<FullPageWrapper />} />
       </Routes>

@@ -11,3 +11,11 @@ html {
 .App {
   text-align: center;
 }
+
+.fp-watermark {
+  display: none;
+}
+
+.fp-overflow {
+  overflow-y: hidden;
+}

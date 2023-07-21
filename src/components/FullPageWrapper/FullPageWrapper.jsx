@@ -1,6 +1,6 @@
 import ReactFullpage from "@fullpage/react-fullpage";
-import LandingPage from "../pages/LandingPage";
-import Navbar from "../components/NavBar/Navbar";
+import LandingPage from "../../pages/LandingPage";
+import Navbar from "../NavBar/Navbar";
 
 const isMobileView = window.innerWidth <= 767;
 
@@ -30,7 +30,6 @@ const contentArray = [
     content2: "Right side content",
     layout: "side-by-side",
   },
-  // Add more content objects as needed
 ];
 
 export default function FullPageWrapper() {
@@ -47,10 +46,8 @@ export default function FullPageWrapper() {
 
             {contentArray.map((contentObj) => {
               if (isMobileView) {
-                // Mobile view: Each content item occupies a full page
                 return <>{getContentForMobileView(contentObj)}</>;
               } else {
-                // Desktop view: Render content based on the layout type
                 switch (contentObj.layout) {
                   case "full":
                     return (
@@ -94,7 +91,6 @@ export default function FullPageWrapper() {
 }
 
 const getContentForMobileView = (contentObj) => {
-  // In mobile view, each content item occupies a full page
   switch (contentObj.layout) {
     case "full":
       return (

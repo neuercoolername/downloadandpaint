@@ -1,11 +1,15 @@
+import { getContentType } from "./helper/getContentType";
+
 export default function ContentSection(props) {
   const { contentObj } = props;
+
+  // add lookup table for the classnames
 
   switch (contentObj.layout) {
     case "full":
       return (
         <div key={contentObj.id} className="section">
-          {contentObj.content.text}
+          {getContentType(contentObj)}
         </div>
       );
     case "left":
@@ -24,8 +28,8 @@ export default function ContentSection(props) {
       return (
         <div key={contentObj.id} className="section">
           <div className="side-by-side-content">
-            <div>{contentObj.content1}</div>
-            <div>{contentObj.content2}</div>
+            <div>{contentObj.content[0].text}</div>
+            <div>{contentObj.content[1].text}</div>
           </div>
         </div>
       );
@@ -33,5 +37,3 @@ export default function ContentSection(props) {
       return null;
   }
 }
-
-const getContentForMobileView = (contentObj) => {};

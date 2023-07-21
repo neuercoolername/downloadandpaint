@@ -19,6 +19,16 @@ const contentArray = [
         text: "This is a second full-page content.",
       },
     ],
+    layout: "side-by-side",
+  },
+  {
+    id: 2,
+    content: [
+      {
+        type: "image",
+        mediaUrl: "./images/M0590_20190424-lowres.jpg",
+      },
+    ],
     layout: "full",
   },
 ];
@@ -29,7 +39,7 @@ export default function FullPageWrapper() {
       <Navbar />
       <ReactFullpage
         licenseKey="6K967-M43B6-H90K9-J23GH-LUQNQ"
-        render={(comp) => (
+        render={() => (
           <ReactFullpage.Wrapper>
             <div className="section">
               <LandingPage />

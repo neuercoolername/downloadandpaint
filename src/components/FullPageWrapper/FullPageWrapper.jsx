@@ -1,34 +1,25 @@
 import ReactFullpage from "@fullpage/react-fullpage";
 import LandingPage from "../../pages/LandingPage";
 import Navbar from "../NavBar/Navbar";
+import ContentSection from "../ContentSection/ContentSection";
+import ContentSectionMobile from "../ContentSection/ContentSectionMobile";
 
 const isMobileView = window.innerWidth <= 767;
 
 const contentArray = [
   {
     id: 1,
-    type: "fullpage",
-    content: "This is a full-page content.",
+    content: [
+      {
+        type: "text",
+        text: "This is a full-page content.",
+      },
+      {
+        type: "text",
+        text: "This is a second full-page content.",
+      },
+    ],
     layout: "full",
-  },
-  {
-    id: 2,
-    type: "left",
-    content: "This is content on the left.",
-    layout: "left",
-  },
-  {
-    id: 3,
-    type: "right",
-    content: "This is content on the right.",
-    layout: "right",
-  },
-  {
-    id: 4,
-    type: "side-by-side",
-    content1: "Left side content",
-    content2: "Right side content",
-    layout: "side-by-side",
   },
 ];
 
@@ -46,42 +37,8 @@ export default function FullPageWrapper() {
 
             {contentArray.map((contentObj) => {
               if (isMobileView) {
-                return <>{getContentForMobileView(contentObj)}</>;
-              } else {
-                switch (contentObj.layout) {
-                  case "full":
-                    return (
-                      <div key={contentObj.id} className="section">
-                        {contentObj.content}
-                      </div>
-                    );
-                  case "left":
-                    return (
-                      <div key={contentObj.id} className="section">
-                        <div className="left-content">{contentObj.content}</div>
-                      </div>
-                    );
-                  case "right":
-                    return (
-                      <div key={contentObj.id} className="section">
-                        <div className="right-content">
-                          {contentObj.content}
-                        </div>
-                      </div>
-                    );
-                  case "side-by-side":
-                    return (
-                      <div key={contentObj.id} className="section">
-                        <div className="side-by-side-content">
-                          <div>{contentObj.content1}</div>
-                          <div>{contentObj.content2}</div>
-                        </div>
-                      </div>
-                    );
-                  default:
-                    return null;
-                }
-              }
+                return <ContentSectionMobile contentObj={contentObj} />;
+              } else return <ContentSection contentObj={contentObj} />;
             })}
           </ReactFullpage.Wrapper>
         )}
@@ -89,40 +46,3 @@ export default function FullPageWrapper() {
     </>
   );
 }
-
-const getContentForMobileView = (contentObj) => {
-  switch (contentObj.layout) {
-    case "full":
-      return (
-        <div key={contentObj.id} className="section">
-          <div className="left-content">{contentObj.content}</div>;
-        </div>
-      );
-
-    case "left":
-      return (
-        <div key={contentObj.id} className="section">
-          <div className="left-content">{contentObj.content}</div>;
-        </div>
-      );
-    case "right":
-      return (
-        <div key={contentObj.id} className="section">
-          <div className="left-content">{contentObj.content}</div>;
-        </div>
-      );
-    case "side-by-side":
-      return (
-        <>
-          <div key={contentObj.id} className="section">
-            <div className="side-by-side-content">{contentObj.content1}</div>
-          </div>
-          <div key={contentObj.id + "_2"} className="section">
-            <div className="side-by-side-content">{contentObj.content2}</div>
-          </div>
-        </>
-      );
-    default:
-      return null;
-  }
-};

@@ -1,5 +1,5 @@
-import { Stage, Layer, Line } from "react-konva";
-import React, { useState } from "react";
+import { Stage, Layer, Line, Shape } from "react-konva";
+import React, { useState, useEffect, useRef } from "react";
 import ForeGroundImage from "../components/LandingPage/ForeGroundImage";
 import BackGroundImage from "../components/LandingPage/BackGroundImage";
 import Headline from "../components/LandingPage/Headline";
@@ -8,13 +8,37 @@ import startPosition from "../utilities/drawStartPosition";
 
 const LandingPage = () => {
   const [lines, setLines] = useState([startPosition]);
-  const isDrawing = React.useRef(false);
+  const isDrawing = React.useRef(true);
+  const [brushImage, setBrushImage] = useState(null);
+  const imageRef = useRef();
 
   // eslint-disable-next-line
   const [dimensions, setDimensions] = useState({
     height: window.innerHeight,
     width: window.innerWidth,
   });
+
+  useEffect(() => {
+    imageRef.current = new window.Image();
+    imageRef.current.src = "./images/brushstroke_shape.png"; // Replace with your brush image path
+    imageRef.current.addEventListener("load", () => {
+      setBrushImage(imageRef.current);
+    });
+    imageRef.current.addEventListener("error", (error) => {
+      console.error("Error loading image:", error);
+    });
+
+    return () => {
+      if (imageRef.current) {
+        imageRef.current.removeEventListener("load", () => {
+          setBrushImage(imageRef.current);
+        });
+        imageRef.current.removeEventListener("error", (error) => {
+          console.error("Error loading image:", error);
+        });
+      }
+    };
+  }, []);
 
   React.useEffect(() => {
     function handleResize() {
@@ -40,32 +64,10 @@ const LandingPage = () => {
     const point = stage.getPointerPosition();
     let lastLine = lines.length === 1 ? null : lines[lines.length - 1];
     lastLine.points = lastLine.points.concat([point.x, point.y]);
+    console.log(lastLine);
 
     lines.splice(lines.length - 1, 1, lastLine);
     setLines(lines.concat());
-  };
-
-  const handleTouchStart = (e) => {
-    isDrawing.current = true;
-    const stage = e.target.getStage();
-    const point = stage.getPointerPosition();
-    setLines([...lines, { points: [point.x, point.y] }]);
-  };
-
-  const handleTouchMove = (e) => {
-    if (isDrawing.current) {
-      const stage = e.target.getStage();
-      const point = stage.getPointerPosition();
-      const lastLine = lines[lines.length - 1];
-      lastLine.points = lastLine.points.concat([point.x, point.y]);
-      lines.splice(lines.length - 1, 1, lastLine);
-      setLines([...lines]);
-    }
-  };
-
-  const handleTouchEnd = () => {
-    isDrawing.current = false;
-    setLines([...lines, { points: [] }]);
   };
 
   return (
@@ -74,9 +76,6 @@ const LandingPage = () => {
         width={window.innerWidth}
         height={window.innerHeight}
         onMousemove={handleMouseMove}
-        onTouchMove={handleTouchMove}
-        onTouchStart={handleTouchStart}
-        onTouchEnd={handleTouchEnd}
       >
         <Layer className="konvaBackground">
           <BackGroundImage
@@ -98,21 +97,61 @@ const LandingPage = () => {
             }
           />
 
-          {lines.map((line, i) => (
+          {brushImage &&
+            lines.map((line, i) => (
+              <Shape
+                key={i}
+                sceneFunc={(context, shape) => {
+                  line.points.forEach((value, index) => {
+                    if (index % 2 === 0) {
+                      // If the index is even, it's an x coordinate
+                      const brushSize = 400;
+                      const x = value - brushSize / 2;
+                      const y = line.points[index + 1] - brushSize / 2;
+                      context.drawImage(brushImage, x, y, brushSize, brushSize);
+                    }
+                  });
+
+                  context.fillStrokeShape(shape);
+                }}
+                globalCompositeOperation="destination-out"
+              />
+            ))}
+
+          {/* {lines.map((line, i) => (
+            <Shape
+              key={i}
+              sceneFunc={(context, shape) => {
+                context.beginPath();
+                for (let i = 1; i < line.points.length; i += 2) {
+                  context.lineTo(line.points[i - 1], line.points[i]);
+                }
+                // Set the lineCap and lineJoin to "round" for a brushstroke effect
+                context.lineJoin = "round";
+                context.lineCap = "round";
+                context.stroke();
+              }}
+              stroke="#df4b26"
+              strokeWidth={window.innerWidth < 576 ? 100 : 200}
+              globalCompositeOperation="destination-out"
+            />
+          ))} */}
+
+          {/* {lines.map((line, i) => (
             <Line
               key={i}
               points={line.points}
               stroke="#df4b26"
               strokeWidth={window.innerWidth < 576 ? 100 : 200}
               tension={0.5}
-              lineCap="round"
-              lineJoin="round"
+              lineCap="square"
+              lineJoin="bevel"
               globalCompositeOperation="destination-out"
             />
-          ))}
+          ))} */}
         </Layer>
       </Stage>
-      <StartText />
+      {/* <StartText /> */}
     </>
   );
 };

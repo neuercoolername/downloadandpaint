@@ -4,10 +4,12 @@ import ForeGroundImage from "../components/LandingPage/ForeGroundImage";
 import BackGroundImage from "../components/LandingPage/BackGroundImage";
 import Headline from "../components/LandingPage/Headline";
 import StartText from "../components/LandingPage/StartText";
-import startPosition from "../utilities/drawStartPosition";
+import { interpolatedPoints as startPosition } from "../utilities/drawStartPosition";
+console.log(startPosition);
 
 const LandingPage = () => {
   const [lines, setLines] = useState([startPosition]);
+  console.log(lines);
   const isDrawing = React.useRef(true);
   const [brushImage, setBrushImage] = useState(null);
   const imageRef = useRef();

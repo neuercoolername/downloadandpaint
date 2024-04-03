@@ -36,7 +36,6 @@ const contentArray = [
 export default function FullPageWrapper() {
   return (
     <>
-      <Navbar />
       <ReactFullpage
         licenseKey="6K967-M43B6-H90K9-J23GH-LUQNQ"
         render={() => (

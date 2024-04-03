@@ -1,7 +1,7 @@
 .navbar {
   z-index: 9000;
-  position: relative;
-  top: 60px;
+  position: absolute;
+  right: 0;
   color: white;
   display: flex;
   flex-direction: row;
@@ -10,6 +10,7 @@
   list-style: none;
   margin-left: 25px;
   margin-right: 20px;
+  margin-top: 20px;
 }
 
 .navbar li {

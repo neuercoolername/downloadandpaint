@@ -5,12 +5,9 @@ import BackGroundImage from "../components/LandingPage/BackGroundImage";
 import Headline from "../components/LandingPage/Headline";
 import StartText from "../components/LandingPage/StartText";
 import { interpolatedPoints as startPosition } from "../utilities/drawStartPosition";
-console.log(startPosition);
 
 const LandingPage = () => {
   const [lines, setLines] = useState([startPosition]);
-  console.log(lines);
-  const isDrawing = React.useRef(true);
   const [brushImage, setBrushImage] = useState(null);
   const imageRef = useRef();
 
@@ -58,7 +55,6 @@ const LandingPage = () => {
   });
 
   const handleMouseMove = (e) => {
-    isDrawing.current = true;
     const pos = e.target.getStage().getPointerPosition();
     setLines([...lines, { points: [{ x: pos.x, y: pos.y }] }]);
 

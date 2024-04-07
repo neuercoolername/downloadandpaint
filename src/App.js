@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import FullPageWrapper from "./components/FullPageWrapper/FullPageWrapper";
 import Navbar from "./components/NavBar/Navbar";
+import BrushMouseIcon from "./components/Common/BrushMouseIcon/BrushMouseIcon";
 
 function App() {
   useEffect(() => {
@@ -20,6 +21,7 @@ function App() {
   return (
     <>
       <Navbar />
+      <BrushMouseIcon />
       <Routes>
         <Route path="/" element={<FullPageWrapper />} />
       </Routes>

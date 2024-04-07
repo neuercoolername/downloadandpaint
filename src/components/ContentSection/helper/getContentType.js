@@ -8,7 +8,6 @@ export const getContentType = (contentObj) => {
       </div>
     );
   } else if (contentObj.content[0].type === "image") {
-    console.log(contentObj.content[0].mediaUrl);
     return (
       <div key={contentObj.id} className="section">
         <div className={ContentStyles.image}>

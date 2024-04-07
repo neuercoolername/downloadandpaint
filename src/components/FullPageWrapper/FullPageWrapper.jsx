@@ -1,6 +1,5 @@
 import ReactFullpage from "@fullpage/react-fullpage";
 import LandingPage from "../../pages/LandingPage";
-import Navbar from "../NavBar/Navbar";
 import ContentSection from "../ContentSection/ContentSection";
 import ContentSectionMobile from "../ContentSection/ContentSectionMobile";
 

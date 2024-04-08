@@ -6,6 +6,7 @@ import Headline from "../components/LandingPage/Headline";
 import StartText from "../components/LandingPage/StartText";
 import { interpolatedPoints as startPosition } from "../utilities/drawStartPosition";
 import BrushMouseIcon from "../components/Common/BrushMouseIcon/BrushMouseIcon";
+import LandingPageStyle from "./LandingPageStyle.module.css";
 
 const LandingPage = () => {
   const [lines, setLines] = useState([startPosition]);
@@ -69,7 +70,7 @@ const LandingPage = () => {
   };
 
   return (
-    <>
+    <div className={LandingPageStyle.noCursor}>
       <Stage
         width={window.innerWidth}
         height={window.innerHeight}
@@ -116,7 +117,7 @@ const LandingPage = () => {
         </Layer>
       </Stage>
       <StartText />
-    </>
+    </div>
   );
 };
 

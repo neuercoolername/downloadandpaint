@@ -1,9 +1,9 @@
 import useMousePosition from "../../../hooks/useMousePosition";
 import BrushMouseIconStyle from "./BrushMouseIconStyle.module.css";
+import { brushSize } from "../../../constants/constants";
 
 const BrushMouseIcon = () => {
   const { x, y } = useMousePosition();
-  const brushSize = 400;
 
   return (
     <img

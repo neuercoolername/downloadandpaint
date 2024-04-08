@@ -7,6 +7,7 @@ import StartText from "../components/LandingPage/StartText";
 import { interpolatedPoints as startPosition } from "../utilities/drawStartPosition";
 import BrushMouseIcon from "../components/Common/BrushMouseIcon/BrushMouseIcon";
 import LandingPageStyle from "./LandingPageStyle.module.css";
+import { brushSize } from "../constants/constants";
 
 const LandingPage = () => {
   const [lines, setLines] = useState([startPosition]);
@@ -103,7 +104,6 @@ const LandingPage = () => {
                 key={i}
                 sceneFunc={(context, shape) => {
                   line.points.forEach((point) => {
-                    const brushSize = 400;
                     const x = point.x - brushSize / 2;
                     const y = point.y - brushSize / 2;
                     context.drawImage(brushImage, x, y, brushSize, brushSize);

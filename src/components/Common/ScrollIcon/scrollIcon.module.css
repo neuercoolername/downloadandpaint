@@ -87,3 +87,12 @@
   font-size: 20px;
   color: white;
 }
+
+.fadeIn {
+  opacity: 0;
+  transition: opacity 2s ease-in-out;
+}
+
+.fadeIn.visible {
+  opacity: 1;
+}

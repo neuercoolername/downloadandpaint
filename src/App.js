@@ -4,6 +4,9 @@ import { Routes, Route } from "react-router-dom";
 import FullPageWrapper from "./components/FullPageWrapper/FullPageWrapper";
 import Navbar from "./components/NavBar/Navbar";
 import BrushMouseIcon from "./components/Common/BrushMouseIcon/BrushMouseIcon";
+import { withDelayedVisibility } from "./hoc/withDelayedVisibility/withDelayedVisibility";
+
+const DelayedNavBar = withDelayedVisibility(Navbar);
 
 function App() {
   useEffect(() => {
@@ -20,7 +23,7 @@ function App() {
 
   return (
     <>
-      <Navbar />
+      <DelayedNavBar />
       <BrushMouseIcon />
       <Routes>
         <Route path="/" element={<FullPageWrapper />} />

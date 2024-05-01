@@ -58,16 +58,31 @@ const LandingPage = () => {
   });
 
   const handleMouseMove = (e) => {
-    const pos = e.target.getStage().getPointerPosition();
-    setLines([...lines, { points: [{ x: pos.x, y: pos.y }] }]);
-
     const stage = e.target.getStage();
     const point = stage.getPointerPosition();
-    let lastLine = lines.length === 1 ? null : lines[lines.length - 1];
-    lastLine.points = lastLine.points.concat([{ x: point.x, y: point.y }]);
 
-    lines.splice(lines.length - 1, 1, lastLine);
-    setLines(lines.concat());
+    setLines((lines) => {
+      const linesCopy = [...lines];
+      let lastLine = linesCopy[linesCopy.length - 1];
+
+      if (lastLine) {
+        const lastPoint = lastLine.points[lastLine.points.length - 1];
+        const dx = point.x - lastPoint.x;
+        const dy = point.y - lastPoint.y;
+        const angle = Math.atan2(dy, dx);
+
+        lastLine = {
+          ...lastLine,
+          points: [...lastLine.points, { ...point, angle }],
+        };
+        linesCopy[linesCopy.length - 1] = lastLine;
+      } else {
+        lastLine = { points: [{ ...point, angle: 0 }] };
+        linesCopy.push(lastLine);
+      }
+
+      return linesCopy;
+    });
   };
 
   return (
@@ -106,7 +121,19 @@ const LandingPage = () => {
                   line.points.forEach((point) => {
                     const x = point.x - brushSize / 2;
                     const y = point.y - brushSize / 2;
-                    context.drawImage(brushImage, x, y, brushSize, brushSize);
+
+                    context.save();
+                    context.translate(x + brushSize / 2, y + brushSize / 2);
+
+                    context.rotate(point.angle);
+                    context.drawImage(
+                      brushImage,
+                      -brushSize / 2,
+                      -brushSize / 2,
+                      brushSize,
+                      brushSize
+                    );
+                    context.restore();
                   });
 
                   context.fillStrokeShape(shape);

@@ -23,21 +23,22 @@ const LandingPage = () => {
   useEffect(() => {
     imageRef.current = new window.Image();
     imageRef.current.src = "./images/brushstroke_shape.png";
-    imageRef.current.addEventListener("load", () => {
+
+    const handleLoad = () => {
       setBrushImage(imageRef.current);
-    });
-    imageRef.current.addEventListener("error", (error) => {
+    };
+
+    const handleError = (error) => {
       console.error("Error loading image:", error);
-    });
+    };
+
+    imageRef.current.addEventListener("load", handleLoad);
+    imageRef.current.addEventListener("error", handleError);
 
     return () => {
       if (imageRef.current) {
-        imageRef.current.removeEventListener("load", () => {
-          setBrushImage(imageRef.current);
-        });
-        imageRef.current.removeEventListener("error", (error) => {
-          console.error("Error loading image:", error);
-        });
+        imageRef.current.removeEventListener("load", handleLoad);
+        imageRef.current.removeEventListener("error", handleError);
       }
     };
   }, []);
@@ -53,6 +54,19 @@ const LandingPage = () => {
     window.addEventListener("resize", handleResize);
 
     return (_) => {
+      window.removeEventListener("resize", handleResize);
+    };
+  });
+
+  useEffect(() => {
+    const handleResize = () => {
+      setDimensions({
+        height: window.innerHeight,
+        width: window.innerWidth,
+      });
+    };
+    window.addEventListener("resize", handleResize);
+    return () => {
       window.removeEventListener("resize", handleResize);
     };
   });

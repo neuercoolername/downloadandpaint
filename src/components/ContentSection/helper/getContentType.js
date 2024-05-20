@@ -1,7 +1,7 @@
 import ContentStyles from "./getContentType.module.css";
 
 export const getContentType = (contentObj) => {
-  if (contentObj.type === "text") {
+  if (contentObj.content[0].type === "text") {
     return (
       <div key={contentObj.id} className="section">
         <div className="left-content">{contentObj.content[0].text}</div>
@@ -11,7 +11,6 @@ export const getContentType = (contentObj) => {
     return (
       <div key={contentObj.id} className="section">
         <div className={ContentStyles.image}>
-          second section
           <img
             className={ContentStyles.image}
             src={contentObj.content[0].mediaUrl}

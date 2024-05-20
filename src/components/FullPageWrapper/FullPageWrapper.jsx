@@ -11,11 +11,11 @@ const contentArray = [
     content: [
       {
         type: "text",
-        text: "This is a full-page content.",
+        text: "This is a left side content of two a side-by-side view",
       },
       {
         type: "text",
-        text: "This is a second full-page content.",
+        text: "This is a right side content of two a side-by-side view",
       },
     ],
     layout: "side-by-side",

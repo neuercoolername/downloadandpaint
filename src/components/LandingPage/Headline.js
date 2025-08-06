@@ -31,7 +31,7 @@ export default class Headline extends React.Component {
       ctx.beginPath();
 
       // put text on canvas
-      ctx.font = `normal 1000 ${this.state.fontSizeHeading}px Arial`;
+      ctx.font = `700 ${this.state.fontSizeHeading}px 'Inter', sans-serif`;
       this.state.textsplit.forEach((element, i) => {
         ctx.fillText(
           element,

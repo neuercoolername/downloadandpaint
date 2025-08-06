@@ -6,7 +6,6 @@ import Headline from "../components/LandingPage/Headline";
 import StartText from "../components/LandingPage/StartText";
 import { interpolatedPoints as startPosition } from "../utilities/drawStartPosition";
 import BrushMouseIcon from "../components/Common/BrushMouseIcon/BrushMouseIcon";
-import LandingPageStyle from "./LandingPageStyle.module.css";
 import { brushSize } from "../constants/constants";
 
 const LandingPage = () => {
@@ -86,7 +85,7 @@ const LandingPage = () => {
         }}
       />
     ));
-  }, [lines, brushImage, brushSize]);
+  }, [lines, brushImage]);
 
 
   const handleMouseMove = useCallback((e) => {
@@ -126,7 +125,7 @@ const LandingPage = () => {
   }, []);
 
   return (
-    <div className={LandingPageStyle.noCursor}>
+    <div className="cursor-none" style={{cursor: 'none'}}>
       <Stage
         width={window.innerWidth}
         height={window.innerHeight}

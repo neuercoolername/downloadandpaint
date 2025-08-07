@@ -6,11 +6,12 @@ export function withDelayedVisibility(WrappedComponent, delay) {
     const isVisible = useDelayedVisibility(delay);
 
     return (
-      <div style={{ position: "static", zIndex: 9001 }}>
+      <div style={{ position: "fixed", zIndex: 9001, top: 0, left: 0, width: "100%", height: "100%", pointerEvents: "none" }}>
         <div
           className={`${withDelayedVisibilityStyle.fadeIn} ${
             isVisible ? withDelayedVisibilityStyle.visible : ""
           }`}
+          style={{ pointerEvents: "auto" }}
         >
           <WrappedComponent {...props} />
         </div>

@@ -10,6 +10,7 @@ const DelayedNavBar = withDelayedVisibility(Navbar);
 
 function App() {
   const [isOnLandingSection, setIsOnLandingSection] = useState(true);
+  const [isHoveringNavbar, setIsHoveringNavbar] = useState(false);
   useEffect(() => {
     const handleOrientationChange = () => {
       if (window.matchMedia("(orientation: landscape)").matches) {
@@ -21,19 +22,25 @@ function App() {
       setIsOnLandingSection(event.detail.sectionIndex === 0);
     };
     
+    const handleNavbarHover = (event) => {
+      setIsHoveringNavbar(event.detail.isHovering);
+    };
+    
     window.addEventListener("orientationchange", handleOrientationChange);
     window.addEventListener("sectionChange", handleSectionChange);
+    window.addEventListener("navbarHover", handleNavbarHover);
     
     return () => {
       window.removeEventListener("orientationchange", handleOrientationChange);
       window.removeEventListener("sectionChange", handleSectionChange);
+      window.removeEventListener("navbarHover", handleNavbarHover);
     };
   }, []);
 
   return (
     <>
       <DelayedNavBar />
-      <BrushMouseIcon isLandingPage={isOnLandingSection} />
+      <BrushMouseIcon isLandingPage={isOnLandingSection && !isHoveringNavbar} />
       <Routes>
         <Route path="/" element={<FullPageWrapper />} />
       </Routes>

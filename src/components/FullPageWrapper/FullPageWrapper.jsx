@@ -33,10 +33,17 @@ const contentArray = [
 ];
 
 export default function FullPageWrapper() {
+  const handleSectionChange = (_, destination) => {
+    window.dispatchEvent(new CustomEvent('sectionChange', { 
+      detail: { sectionIndex: destination.index } 
+    }));
+  };
+
   return (
     <>
       <ReactFullpage
         licenseKey="6K967-M43B6-H90K9-J23GH-LUQNQ"
+        onLeave={handleSectionChange}
         render={() => (
           <ReactFullpage.Wrapper>
             <div className="section">

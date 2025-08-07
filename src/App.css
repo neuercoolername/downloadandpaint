@@ -3,9 +3,11 @@ html {
   margin: 0;
   padding: 0;
   overflow: hidden;
+  cursor: none;
 }
 * {
   box-sizing: border-box;
+  cursor: none !important;
 }
 
 .App {

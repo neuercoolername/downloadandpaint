@@ -4,4 +4,20 @@
   left: 0;
   z-index: 9999;
   pointer-events: none;
+  transition: width 0.3s ease-out, height 0.3s ease-out, filter 0.3s ease-out;
+  transform: rotate(var(--rotation, 0rad));
+}
+
+.smallBrush {
+  filter: drop-shadow(1px 0px 0px black) contrast(3) saturate(2);
+}
+
+@keyframes brushSizeChange {
+  0% { transform: rotate(var(--rotation, 0rad)) scale(1.2); }
+  50% { transform: rotate(var(--rotation, 0rad)) scale(0.8); }
+  100% { transform: rotate(var(--rotation, 0rad)) scale(1); }
+}
+
+.brushSizeChanging {
+  animation: brushSizeChange 0.4s ease-in-out;
 }

@@ -5,7 +5,6 @@ import BackGroundImage from "../components/LandingPage/BackGroundImage";
 import Headline from "../components/LandingPage/Headline";
 import StartText from "../components/LandingPage/StartText";
 import { interpolatedPoints as startPosition } from "../utilities/drawStartPosition";
-import BrushMouseIcon from "../components/Common/BrushMouseIcon/BrushMouseIcon";
 import { brushSize } from "../constants/constants";
 
 const LandingPage = () => {
@@ -132,7 +131,6 @@ const LandingPage = () => {
         onMousemove={handleMouseMove}
       >
         <Layer className="konvaBackground">
-          <BrushMouseIcon />
           <BackGroundImage
             src={
               window.innerWidth > 900

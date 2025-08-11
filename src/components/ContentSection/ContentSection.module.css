@@ -1,0 +1,151 @@
+.sectionContent {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.leftContent {
+  max-width: 60%;
+  text-align: left;
+  margin-right: auto;
+}
+
+.rightContent {
+  max-width: 60%;
+  text-align: right;
+  margin-left: auto;
+}
+
+.sideBySideContent {
+  display: flex;
+  gap: 2rem;
+  width: 100%;
+  max-width: 1200px;
+  align-items: flex-start;
+}
+
+.sideBySideContent > div {
+  flex: 1;
+}
+
+.sideBySideContent img {
+  max-width: 100%;
+  max-height: 70vh;
+  height: auto;
+  object-fit: contain;
+}
+
+.textContent {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #333;
+  white-space: pre-line;
+}
+
+.sectionTitle {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
+  color: #333;
+  text-align: center;
+}
+
+.footnoteRef {
+  color: #0066cc;
+  cursor: pointer;
+  font-weight: 500;
+  text-decoration: underline;
+  transition: color 0.2s ease;
+}
+
+.footnoteRef:hover {
+  color: #004499;
+}
+
+.footnotePopover {
+  background: rgba(0, 0, 0, 0.9);
+  color: white;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  line-height: 1.4;
+  max-width: 300px;
+  word-wrap: break-word;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  pointer-events: none;
+  animation: fadeIn 0.2s ease-out;
+}
+
+.footnotePopover::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid rgba(0, 0, 0, 0.9);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+.imageContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.imageContainer img {
+  max-width: 100%;
+  max-height: 70vh;
+  height: auto;
+  object-fit: contain;
+}
+
+.caption {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: #666;
+  font-style: italic;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .sectionContent {
+    padding: 1rem;
+  }
+  
+  .sideBySideContent {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .leftContent,
+  .rightContent {
+    max-width: 100%;
+  }
+  
+  .textContent {
+    font-size: 0.9rem;
+  }
+
+  .sectionTitle {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+}

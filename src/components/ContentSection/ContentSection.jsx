@@ -75,6 +75,18 @@ export default function ContentSection(props) {
           {item.caption && <p className={styles.caption}>{item.caption}</p>}
         </div>
       );
+    } else if (item.type === "video") {
+      return (
+        <div className={styles.videoContainer}>
+          <video
+            src={item.mediaUrl}
+            autoPlay={item.autoplay}
+            loop={item.loop}
+            muted={item.muted}
+            playsInline
+          />
+        </div>
+      );
     }
     return "";
   };
@@ -99,6 +111,13 @@ export default function ContentSection(props) {
             <div className={styles.imageContainer}>
               <img src={contentObj.content[0].mediaUrl} alt="" />
             </div>
+          </div>
+        );
+      } else if (contentObj.content[0].type === "video") {
+        return (
+          <div className={styles.sectionContent}>
+            {renderTitle()}
+            {renderContent(contentObj.content[0])}
           </div>
         );
       }

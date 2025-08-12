@@ -6,6 +6,7 @@
   padding: 2rem;
   box-sizing: border-box;
   overflow: hidden;
+  position: relative;
 }
 
 .leftContent {
@@ -47,11 +48,14 @@
 }
 
 .sectionTitle {
-  font-size: 2rem;
-  font-weight: 600;
-  margin-bottom: 2rem;
+  position: absolute;
+  top: 2rem;
+  left: 2rem;
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin: 0;
   color: #333;
-  text-align: center;
+  text-align: left;
 }
 
 .footnoteRef {
@@ -81,7 +85,7 @@
 }
 
 .footnotePopover::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 100%;
   left: 50%;
@@ -129,17 +133,17 @@
   .sectionContent {
     padding: 1rem;
   }
-  
+
   .sideBySideContent {
     flex-direction: column;
     gap: 1rem;
   }
-  
+
   .leftContent,
   .rightContent {
     max-width: 100%;
   }
-  
+
   .textContent {
     font-size: 0.9rem;
   }

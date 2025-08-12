@@ -6,7 +6,7 @@ export default function ContentSection(props) {
 
   const renderTitle = () => {
     if (contentObj.title) {
-      return <h1 className={styles.sectionTitle}>{contentObj.title}</h1>;
+      return <h3 className={styles.sectionTitle}>{contentObj.title}</h3>;
     }
     return null;
   };

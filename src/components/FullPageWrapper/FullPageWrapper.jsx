@@ -1,5 +1,6 @@
 import ReactFullpage from "@fullpage/react-fullpage";
 import { useState, useEffect } from "react";
+import parse from 'html-react-parser';
 import LandingPage from "../../pages/LandingPage";
 import ContentSection from "../ContentSection/ContentSection";
 import ContentSectionMobile from "../ContentSection/ContentSectionMobile";
@@ -107,7 +108,7 @@ export default function FullPageWrapper() {
             fontFamily: 'inherit'
           }}
         >
-          {activeFootnote.text}
+          {parse(activeFootnote.text)}
         </div>
       )}
     </>

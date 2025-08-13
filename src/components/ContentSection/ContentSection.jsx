@@ -1,4 +1,5 @@
 import styles from "./ContentSection.module.css";
+import parse from 'html-react-parser';
 
 export default function ContentSection(props) {
   const { contentObj, globalFootnotes = {} } = props;
@@ -33,29 +34,32 @@ export default function ContentSection(props) {
 
   const renderTextWithFootnotes = (text, footnotes = []) => {
     if (!footnotes || footnotes.length === 0) {
-      return text;
+      return parse(text);
     }
 
-    // Replace footnote references like [1] with hoverable spans
+    // Replace footnote references like [1] with hoverable spans (as HTML string)
     const footnoteRegex = /\[(\d+)\]/g;
-    const parts = text.split(footnoteRegex);
+    let processedText = text.replace(footnoteRegex, (match, num) => {
+      const footnoteNum = parseInt(num);
+      return `<span class="${styles.footnoteRef}" data-footnote="${footnoteNum}">${match}</span>`;
+    });
     
-    return parts.map((part, index) => {
-      // If part is a number (footnote reference)
-      if (index % 2 === 1) {
-        const footnoteNum = parseInt(part);
-        return (
-          <span
-            key={index}
-            className={styles.footnoteRef}
-            onMouseEnter={(e) => handleFootnoteHover(e, footnoteNum)}
-            onMouseLeave={handleFootnoteLeave}
-          >
-            [{part}]
-          </span>
-        );
+    // Parse the HTML with React
+    return parse(processedText, {
+      replace: (domNode) => {
+        if (domNode.type === 'tag' && domNode.name === 'span' && domNode.attribs['data-footnote']) {
+          const footnoteNum = parseInt(domNode.attribs['data-footnote']);
+          return (
+            <span
+              className={styles.footnoteRef}
+              onMouseEnter={(e) => handleFootnoteHover(e, footnoteNum)}
+              onMouseLeave={handleFootnoteLeave}
+            >
+              {domNode.children[0]?.data || `[${footnoteNum}]`}
+            </span>
+          );
+        }
       }
-      return part;
     });
   };
 

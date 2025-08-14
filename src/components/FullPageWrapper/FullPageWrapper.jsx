@@ -1,5 +1,5 @@
 import ReactFullpage from "@fullpage/react-fullpage";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import parse from 'html-react-parser';
 import LandingPage from "../../pages/LandingPage";
 import ContentSection from "../ContentSection/ContentSection";
@@ -31,6 +31,7 @@ export default function FullPageWrapper() {
   const globalFootnotes = buildGlobalFootnotes();
   const [activeFootnote, setActiveFootnote] = useState(null);
   const [popoverPosition, setPopoverPosition] = useState({ x: 0, y: 0 });
+  const popoverRef = useRef(null);
   
   // Listen for footnote events from ContentSection components
   useEffect(() => {
@@ -40,7 +41,11 @@ export default function FullPageWrapper() {
         index: footnoteIndex,
         text: globalFootnotes[footnoteIndex]
       });
-      setPopoverPosition(position);
+      setPopoverPosition({
+        x: position.x,
+        y: position.y,
+        isMobile: position.isMobile || false
+      });
     };
     
     const handleFootnoteLeave = () => {
@@ -55,6 +60,27 @@ export default function FullPageWrapper() {
       window.removeEventListener('footnoteLeave', handleFootnoteLeave);
     };
   }, [globalFootnotes]);
+
+  // Handle click outside to close footnote
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (activeFootnote && popoverRef.current && !popoverRef.current.contains(event.target)) {
+        setActiveFootnote(null);
+      }
+    };
+
+    if (activeFootnote) {
+      // Add slight delay to prevent immediate closing when footnote opens
+      const timer = setTimeout(() => {
+        document.addEventListener('click', handleClickOutside);
+      }, 100);
+      
+      return () => {
+        clearTimeout(timer);
+        document.removeEventListener('click', handleClickOutside);
+      };
+    }
+  }, [activeFootnote]);
   
   const handleSectionChange = (_, destination) => {
     window.dispatchEvent(new CustomEvent('sectionChange', { 
@@ -62,26 +88,40 @@ export default function FullPageWrapper() {
     }));
   };
 
+  const handleAfterLoad = (_, destination) => {
+    // Dispatch sectionVisible event after section loads
+    setTimeout(() => {
+      window.dispatchEvent(new CustomEvent('sectionVisible', { 
+        detail: { sectionIndex: destination.index } 
+      }));
+    }, 100);
+  };
+
   return (
     <>
       <ReactFullpage
         licenseKey="6K967-M43B6-H90K9-J23GH-LUQNQ"
         onLeave={handleSectionChange}
+        afterLoad={handleAfterLoad}
         render={() => (
           <ReactFullpage.Wrapper>
             <div className="section">
               <LandingPage />
             </div>
 
-            {contentArray.map((contentObj) => (
-              <div key={contentObj.id} className="section">
-                {isMobileView ? (
-                  <ContentSectionMobile contentObj={contentObj} globalFootnotes={globalFootnotes} />
-                ) : (
+            {isMobileView ? (
+              // Mobile: Let mobile component control section creation
+              contentArray.map((contentObj) => (
+                <ContentSectionMobile key={contentObj.id} contentObj={contentObj} globalFootnotes={globalFootnotes} />
+              ))
+            ) : (
+              // Desktop: Wrap each component in a section
+              contentArray.map((contentObj) => (
+                <div key={contentObj.id} className="section">
                   <ContentSection contentObj={contentObj} globalFootnotes={globalFootnotes} />
-                )}
-              </div>
-            ))}
+                </div>
+              ))
+            )}
           </ReactFullpage.Wrapper>
         )}
       />
@@ -89,23 +129,28 @@ export default function FullPageWrapper() {
       {/* Global footnote popover */}
       {activeFootnote && (
         <div 
+          ref={popoverRef}
+          onClick={() => popoverPosition.isMobile && setActiveFootnote(null)}
           style={{
             position: 'fixed',
             top: popoverPosition.y + 'px',
             left: popoverPosition.x + 'px',
             background: 'white',
             color: '#333',
-            padding: '12px 16px',
+            padding: popoverPosition.isMobile ? '16px 20px' : '12px 16px',
             zIndex: 99999,
-            borderRadius: '6px',
-            maxWidth: '280px',
+            borderRadius: '8px',
+            maxWidth: popoverPosition.isMobile ? '90vw' : '280px',
+            width: popoverPosition.isMobile ? '90vw' : 'auto',
             transform: 'translateX(-50%)',
-            pointerEvents: 'none',
-            fontSize: '0.875rem',
+            pointerEvents: popoverPosition.isMobile ? 'auto' : 'none',
+            fontSize: popoverPosition.isMobile ? '1rem' : '0.875rem',
             lineHeight: '1.5',
             boxShadow: '0 8px 32px rgba(0, 0, 0, 0.12)',
             border: '1px solid rgba(0, 0, 0, 0.08)',
-            fontFamily: 'inherit'
+            fontFamily: 'inherit',
+            textAlign: popoverPosition.isMobile ? 'center' : 'left',
+            cursor: popoverPosition.isMobile ? 'pointer' : 'default'
           }}
         >
           {parse(activeFootnote.text)}

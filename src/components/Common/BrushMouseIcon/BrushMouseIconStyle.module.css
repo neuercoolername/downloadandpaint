@@ -21,3 +21,9 @@
 .brushSizeChanging {
   animation: brushSizeChange 0.4s ease-in-out;
 }
+
+@media (max-width: 768px), (pointer: coarse) {
+  .brushMouseIcon {
+    display: none !important;
+  }
+}

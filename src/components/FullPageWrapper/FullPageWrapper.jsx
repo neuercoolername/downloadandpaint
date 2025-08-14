@@ -82,9 +82,15 @@ export default function FullPageWrapper() {
     }
   }, [activeFootnote]);
   
-  const handleSectionChange = (_, destination) => {
+  const handleSectionChange = (origin, destination) => {
+    const scrollDirection = destination.index < origin.index ? 'up' : 'down';
+    
     window.dispatchEvent(new CustomEvent('sectionChange', { 
-      detail: { sectionIndex: destination.index } 
+      detail: { 
+        sectionIndex: destination.index,
+        direction: scrollDirection,
+        fromIndex: origin.index 
+      } 
     }));
   };
 

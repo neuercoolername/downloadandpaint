@@ -14,6 +14,7 @@ function App() {
   const [isHoveringNavbar, setIsHoveringNavbar] = useState(false);
   const [showNavbar, setShowNavbar] = useState(false);
   const [currentSectionIndex, setCurrentSectionIndex] = useState(0);
+  const [hasInitialFadeCompleted, setHasInitialFadeCompleted] = useState(false);
   useEffect(() => {
     const handleOrientationChange = () => {
       if (window.matchMedia("(orientation: landscape)").matches) {
@@ -25,6 +26,11 @@ function App() {
       const { sectionIndex, direction } = event.detail;
       setIsOnLandingSection(sectionIndex === 0);
       setCurrentSectionIndex(sectionIndex);
+      
+      // Mark initial fade as completed once user leaves landing section
+      if (sectionIndex !== 0 && !hasInitialFadeCompleted) {
+        setHasInitialFadeCompleted(true);
+      }
       
       if (sectionIndex === 0) {
         // Hide navbar when on landing page
@@ -65,6 +71,7 @@ function App() {
         <DelayedNavBar 
           isLandingPage={isOnLandingSection}
           currentSectionIndex={currentSectionIndex}
+          skipAnimation={hasInitialFadeCompleted}
         />
       )}
       <BrushMouseIcon isLandingPage={isOnLandingSection && !isHoveringNavbar} />

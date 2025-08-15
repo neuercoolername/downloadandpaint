@@ -1,9 +1,10 @@
 import NavbarStyles from "./Navbar.module.css";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useState, useEffect, useRef } from 'react';
 
 export default function Navbar({ isLandingPage = true, currentSectionIndex = 0 }) {
   const navigate = useNavigate();
+  const location = useLocation();
   const [isChaptersDropdownOpen, setIsChaptersDropdownOpen] = useState(false);
   const [isMobileOverlayOpen, setIsMobileOverlayOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 767);
@@ -78,8 +79,11 @@ export default function Navbar({ isLandingPage = true, currentSectionIndex = 0 }
 
   const handleHomeClick = () => {
     // Use FullPage.js API to navigate to first section (landing page)
-    if (window.fullpage_api) {
+    if (location.pathname === '/') {
       window.fullpage_api.moveTo(1); // FullPage.js uses 1-based indexing
+    } else {
+      // If not on FullPage route (e.g., About page), navigate to home
+      navigate('/');
     }
   };
 
@@ -93,8 +97,12 @@ export default function Navbar({ isLandingPage = true, currentSectionIndex = 0 }
 
   const handleChapterSelect = (chapter) => {
     // Navigate to the first section of the selected chapter
-    if (window.fullpage_api) {
+    if (location.pathname === '/') {
       window.fullpage_api.moveTo(chapter.startSection);
+    } else {
+      // If not on FullPage route (e.g., About page), navigate to home and store target section
+      sessionStorage.setItem('targetSection', chapter.startSection.toString());
+      navigate('/');
     }
     setIsChaptersDropdownOpen(false);
     setIsMobileOverlayOpen(false); // Close mobile overlay too

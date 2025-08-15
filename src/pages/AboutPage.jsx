@@ -1,47 +1,62 @@
 import { useNavigate } from 'react-router-dom';
+import Navbar from '../components/NavBar/Navbar';
+import styles from './AboutPage.module.css';
 
 export default function AboutPage() {
   const navigate = useNavigate();
 
-  const handleBackToHome = () => {
-    navigate('/');
-  };
-
   return (
-    <div style={{
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
-      minHeight: '100vh',
-      backgroundColor: '#f5f5f5',
-      fontFamily: 'inherit',
-      color: '#333'
-    }}>
-      <h1 style={{ fontSize: '2rem', marginBottom: '1rem' }}>About</h1>
-      <p style={{ 
-        fontSize: '1.1rem', 
-        textAlign: 'center', 
-        maxWidth: '600px',
-        lineHeight: '1.6',
-        marginBottom: '2rem'
-      }}>
-        This is a placeholder About page. Content will be added here in future iterations.
-      </p>
-      <button 
-        onClick={handleBackToHome}
-        style={{
-          padding: '12px 24px',
-          fontSize: '1rem',
-          backgroundColor: '#333',
-          color: 'white',
-          border: 'none',
-          borderRadius: '4px',
-          cursor: 'pointer'
-        }}
-      >
-        Back to Home
-      </button>
-    </div>
+    <>
+      <Navbar isLandingPage={false} />
+      <div className={styles.aboutContainer}>
+        <div className={styles.content}>
+          <p className={styles.projectInfo}>
+            Download and Paint Like A Master is a project by{' '}
+            <a 
+              href="https://davidamberg.de/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className={styles.link}
+            >
+              David Amberg
+            </a>.
+          </p>
+
+          <p className={styles.contact}>
+            Contact: mail[at]downloadandpaint.info
+          </p>
+
+          <div className={styles.supportSection}>
+            <p className={styles.supportText}>
+              <strong>This project was supported by:</strong>
+            </p>
+            
+            <div className={styles.logoContainer}>
+              <img 
+                src="/images/contentSections/BKM_Web_de.gif" 
+                alt="BKM Support" 
+                className={styles.logo}
+              />
+              <img 
+                src="/images/contentSections/CDR_BKM_Neustart_Kultur_Wortmarke_pos_RGB_RZ.svg" 
+                alt="Neustart Kultur" 
+                className={styles.logo}
+              />
+              <img 
+                src="/images/contentSections/dkb_logo_1,9 x 6,4cm_RGB_300dpi.png" 
+                alt="DKB Support" 
+                className={styles.logo}
+              />
+            </div>
+          </div>
+
+          <p className={styles.legal}>
+            <a href="/legal.html" className={styles.link}>
+              Legal notice
+            </a>
+          </p>
+        </div>
+      </div>
+    </>
   );
 }

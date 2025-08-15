@@ -103,6 +103,17 @@ export default function FullPageWrapper() {
     }, 100);
   };
 
+  // Check for target section from navbar navigation
+  useEffect(() => {
+    const targetSection = sessionStorage.getItem('targetSection');
+    if (targetSection && window.fullpage_api) {
+      setTimeout(() => {
+        window.fullpage_api.moveTo(parseInt(targetSection));
+        sessionStorage.removeItem('targetSection');
+      }, 500); // Small delay to ensure FullPage.js is initialized
+    }
+  }, []);
+
   return (
     <>
       <ReactFullpage

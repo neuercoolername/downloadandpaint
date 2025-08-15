@@ -5,7 +5,10 @@ import { useState, useEffect, useRef } from 'react';
 export default function Navbar({ isLandingPage = true, currentSectionIndex = 0 }) {
   const navigate = useNavigate();
   const [isChaptersDropdownOpen, setIsChaptersDropdownOpen] = useState(false);
+  const [isMobileOverlayOpen, setIsMobileOverlayOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 767);
   const chaptersRef = useRef(null);
+  const mobileOverlayRef = useRef(null);
 
   // Chapter mapping with section ranges
   const chapters = [
@@ -16,6 +19,16 @@ export default function Navbar({ isLandingPage = true, currentSectionIndex = 0 }
     { id: 5, title: "Hidden treasures of creativity", startSection: 22, endSection: 26 },
     { id: 6, title: "Center and Periphery", startSection: 27, endSection: 33 }
   ];
+
+  // Handle window resize for mobile detection
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 767);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   // Click away to close dropdown
   useEffect(() => {
@@ -33,6 +46,23 @@ export default function Navbar({ isLandingPage = true, currentSectionIndex = 0 }
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [isChaptersDropdownOpen]);
+
+  // Click away to close mobile overlay
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (mobileOverlayRef.current && !mobileOverlayRef.current.contains(event.target)) {
+        setIsMobileOverlayOpen(false);
+      }
+    };
+
+    if (isMobileOverlayOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isMobileOverlayOpen]);
 
   const handleMouseEnter = () => {
     window.dispatchEvent(new CustomEvent('navbarHover', { 
@@ -67,6 +97,11 @@ export default function Navbar({ isLandingPage = true, currentSectionIndex = 0 }
       window.fullpage_api.moveTo(chapter.startSection);
     }
     setIsChaptersDropdownOpen(false);
+    setIsMobileOverlayOpen(false); // Close mobile overlay too
+  };
+
+  const handleMobileIconClick = () => {
+    setIsMobileOverlayOpen(!isMobileOverlayOpen);
   };
 
   // Determine which chapter is currently active
@@ -85,32 +120,79 @@ export default function Navbar({ isLandingPage = true, currentSectionIndex = 0 }
 
   return (
     <div>
-     <ul 
-       className={NavbarStyles.navbar}
-       style={{ color: navbarColor }}
-       onMouseEnter={handleMouseEnter}
-       onMouseLeave={handleMouseLeave}
-     >
-      <li onClick={handleHomeClick}>Home</li>
-      <li className={NavbarStyles.chaptersContainer} ref={chaptersRef} onClick={handleChaptersClick}>
-        <span>Chapters</span>
-        {isChaptersDropdownOpen && (
-          <ul className={NavbarStyles.chaptersDropdown}>
-            {chapters.map(chapter => (
-              <li 
-                key={chapter.id}
-                onClick={() => handleChapterSelect(chapter)}
-                className={activeChapter?.id === chapter.id ? NavbarStyles.activeChapter : ''}
-              >
-                {chapter.title}
-              </li>
-            ))}
-          </ul>
-        )}
-      </li>
-      <li onClick={handleAboutClick}>About</li>
-    </ul> 
+      {isMobile ? (
+        // Mobile Navigation
+        <>
+          <div 
+            className={NavbarStyles.mobileNavbar}
+            style={{ color: navbarColor }}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+          >
+            <img 
+              src="/images/icon/navIcon.png"
+              alt="Menu"
+              className={NavbarStyles.mobileIcon} 
+              onClick={handleMobileIconClick}
+            />
+          </div>
+          
+          {isMobileOverlayOpen && (
+            <div className={NavbarStyles.mobileOverlay} ref={mobileOverlayRef}>
+              <img 
+                src="/images/icon/navIcon.png"
+                alt="Close"
+                className={NavbarStyles.mobileCloseIcon} 
+                onClick={handleMobileIconClick}
+              />
+              <div className={NavbarStyles.mobileChapterList}>
+                <div onClick={handleHomeClick} className={NavbarStyles.mobileNavItem}>
+                  Home
+                </div>
+                {chapters.map(chapter => (
+                  <div 
+                    key={chapter.id}
+                    onClick={() => handleChapterSelect(chapter)}
+                    className={`${NavbarStyles.mobileNavItem} ${activeChapter?.id === chapter.id ? NavbarStyles.activeChapter : ''}`}
+                  >
+                    {chapter.title}
+                  </div>
+                ))}
+                <div onClick={handleAboutClick} className={NavbarStyles.mobileNavItem}>
+                  About
+                </div>
+              </div>
+            </div>
+          )}
+        </>
+      ) : (
+        // Desktop Navigation
+        <ul 
+          className={NavbarStyles.navbar}
+          style={{ color: navbarColor }}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+        >
+          <li onClick={handleHomeClick}>Home</li>
+          <li className={NavbarStyles.chaptersContainer} ref={chaptersRef} onClick={handleChaptersClick}>
+            <span>Chapters</span>
+            {isChaptersDropdownOpen && (
+              <ul className={NavbarStyles.chaptersDropdown}>
+                {chapters.map(chapter => (
+                  <li 
+                    key={chapter.id}
+                    onClick={() => handleChapterSelect(chapter)}
+                    className={activeChapter?.id === chapter.id ? NavbarStyles.activeChapter : ''}
+                  >
+                    {chapter.title}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </li>
+          <li onClick={handleAboutClick}>About</li>
+        </ul>
+      )}
     </div>
-    
   );
 }

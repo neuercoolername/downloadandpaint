@@ -78,9 +78,22 @@ export default function Navbar({ isLandingPage = true, currentSectionIndex = 0 }
   };
 
   const handleHomeClick = () => {
+    // Close mobile overlay first
+    setIsMobileOverlayOpen(false);
+    
     // Use FullPage.js API to navigate to first section (landing page)
     if (location.pathname === '/') {
-      window.fullpage_api.moveTo(1); // FullPage.js uses 1-based indexing
+      // Check if fullpage_api is available and wait if needed
+      if (window.fullpage_api) {
+        window.fullpage_api.moveTo(1); // FullPage.js uses 1-based indexing
+      } else {
+        // Fallback: try again after a short delay
+        setTimeout(() => {
+          if (window.fullpage_api) {
+            window.fullpage_api.moveTo(1);
+          }
+        }, 100);
+      }
     } else {
       // If not on FullPage route (e.g., About page), navigate to home
       navigate('/');
@@ -88,6 +101,8 @@ export default function Navbar({ isLandingPage = true, currentSectionIndex = 0 }
   };
 
   const handleAboutClick = () => {
+    // Close mobile overlay first
+    setIsMobileOverlayOpen(false);
     navigate('/about');
   };
 

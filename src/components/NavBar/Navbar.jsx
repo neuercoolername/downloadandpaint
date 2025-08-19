@@ -13,12 +13,12 @@ export default function Navbar({ isLandingPage = true, currentSectionIndex = 0 }
 
   // Chapter mapping with section ranges
   const chapters = [
-    { id: 1, title: "Painter by the Wall", startSection: 3, endSection: 5 },
-    { id: 2, title: "Walls and Windows", startSection: 6, endSection: 9 },
-    { id: 3, title: "Bird droppings", startSection: 10, endSection: 16 },
-    { id: 4, title: "Download and Paint Like A Master", startSection: 17, endSection: 21 },
-    { id: 5, title: "Hidden treasures of creativity", startSection: 22, endSection: 26 },
-    { id: 6, title: "Center and Periphery", startSection: 27, endSection: 33 }
+    { id: 1, title: "Painter by the Wall", startSection: 2, endSection: 4 },
+    { id: 2, title: "Walls and Windows", startSection: 5, endSection: 8 },
+    { id: 3, title: "Bird droppings", startSection: 9, endSection: 15 },
+    { id: 4, title: "Download and Paint Like A Master", startSection: 16, endSection: 20 },
+    { id: 5, title: "Hidden treasures of creativity", startSection: 21, endSection: 25 },
+    { id: 6, title: "Center and Periphery", startSection: 26, endSection: 32 }
   ];
 
   // Handle window resize for mobile detection
@@ -153,7 +153,7 @@ export default function Navbar({ isLandingPage = true, currentSectionIndex = 0 }
             onMouseLeave={handleMouseLeave}
           >
             <img 
-              src="/images/icon/navIcon.png"
+              src={isLandingPage ? "/images/icon/navIcon-light.png" : "/images/icon/navIcon.png"}
               alt="Menu"
               className={NavbarStyles.mobileIcon} 
               onClick={handleMobileIconClick}
@@ -163,7 +163,7 @@ export default function Navbar({ isLandingPage = true, currentSectionIndex = 0 }
           {isMobileOverlayOpen && (
             <div className={NavbarStyles.mobileOverlay} ref={mobileOverlayRef}>
               <img 
-                src="/images/icon/navIcon.png"
+                src={isLandingPage ? "/images/icon/navIcon-light.png" : "/images/icon/navIcon.png"}
                 alt="Close"
                 className={NavbarStyles.mobileCloseIcon} 
                 onClick={handleMobileIconClick}

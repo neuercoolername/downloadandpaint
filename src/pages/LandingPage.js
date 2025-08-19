@@ -123,6 +123,31 @@ const LandingPage = () => {
     });
   }, []);
 
+  // Check if mobile view
+  const isMobile = window.innerWidth <= 767;
+
+  if (isMobile) {
+    // Mobile: Use static image
+    return (
+      <div style={{ position: 'relative', width: '100vw', height: '100vh' }}>
+        <img 
+          src="./images/mobile-landing-page.png" 
+          alt="Landing Page"
+          style={{
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            position: 'absolute',
+            top: 0,
+            left: 0
+          }}
+        />
+        <Headline />
+        <StartText />
+      </div>
+    );
+  }
+
   return (
     <div className="cursor-none" style={{cursor: 'none'}}>
       <Stage

@@ -7,7 +7,7 @@ import BrushMouseIcon from "./components/Common/BrushMouseIcon/BrushMouseIcon";
 import AboutPage from "./pages/AboutPage";
 import { withDelayedVisibility } from "./hoc/withDelayedVisibility/withDelayedVisibility";
 
-const DelayedNavBar = withDelayedVisibility(Navbar);
+const DelayedNavBar = withDelayedVisibility(Navbar, 1000);
 
 function App() {
   const [isOnLandingSection, setIsOnLandingSection] = useState(true);

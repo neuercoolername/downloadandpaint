@@ -103,3 +103,9 @@
     opacity: 1;
   }
 }
+
+.mobile {
+  font-size: 26px !important;
+  letter-spacing: 2px !important;
+  white-space: nowrap !important;
+}

@@ -6,6 +6,33 @@ import Headline from "../components/LandingPage/Headline";
 import StartText from "../components/LandingPage/StartText";
 import { interpolatedPoints as startPosition } from "../utilities/drawStartPosition";
 import { brushSize } from "../constants/constants";
+import { withDelayedVisibility } from "../hoc/withDelayedVisibility/withDelayedVisibility";
+
+// Create a delayed title component
+const MobileTitle = () => (
+  <div
+    style={{
+      position: "absolute",
+      top: window.innerWidth < 360 ? "15px" : "25px",
+      left: window.innerWidth < 360 ? "15px" : "25px",
+      color: "white",
+      fontWeight: "300",
+      fontSize: window.innerWidth < 360 ? "32px" : "36px",
+      lineHeight: "1.1",
+      fontFamily: "'Inter', sans-serif",
+      maxWidth: window.innerWidth < 360 ? "180px" : "220px",
+      textShadow: "2px 2px 6px rgba(0,0,0,0.7)",
+      zIndex: 10,
+      letterSpacing: "2px",
+    }}
+  >
+    Download
+    <br />
+    and <br /> Paint
+  </div>
+);
+
+const DelayedMobileTitle = withDelayedVisibility(MobileTitle, 1000);
 
 const LandingPage = () => {
   const [lines, setLines] = useState([startPosition]);
@@ -62,7 +89,7 @@ const LandingPage = () => {
         key={i}
         sceneFunc={(context, shape) => {
           context.globalCompositeOperation = "destination-out";
-          
+
           line.points.forEach((point) => {
             const x = point.x - brushSize / 2;
             const y = point.y - brushSize / 2;
@@ -86,7 +113,6 @@ const LandingPage = () => {
     ));
   }, [lines, brushImage]);
 
-
   const handleMouseMove = useCallback((e) => {
     const now = Date.now();
     if (now - lastUpdateTime.current < 16) return; // Throttle to ~60fps
@@ -104,9 +130,9 @@ const LandingPage = () => {
         const dx = point.x - lastPoint.x;
         const dy = point.y - lastPoint.y;
         const distance = Math.sqrt(dx * dx + dy * dy);
-        
+
         if (distance < 3) return linesCopy;
-        
+
         const angle = Math.atan2(dy, dx);
 
         lastLine = {
@@ -129,27 +155,27 @@ const LandingPage = () => {
   if (isMobile) {
     // Mobile: Use static image
     return (
-      <div style={{ position: 'relative', width: '100vw', height: '100vh' }}>
-        <img 
-          src="./images/mobile-landing-page.png" 
+      <div style={{ position: "relative", width: "100vw", height: "100vh" }}>
+        <img
+          src="./images/mobile-landing-page.png"
           alt="Landing Page"
           style={{
-            width: '100%',
-            height: '100%',
-            objectFit: 'cover',
-            position: 'absolute',
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            position: "absolute",
             top: 0,
-            left: 0
+            left: 0,
           }}
         />
-        <Headline />
+        <DelayedMobileTitle />
         <StartText />
       </div>
     );
   }
 
   return (
-    <div className="cursor-none" style={{cursor: 'none'}}>
+    <div className="cursor-none" style={{ cursor: "none" }}>
       <Stage
         width={window.innerWidth}
         height={window.innerHeight}

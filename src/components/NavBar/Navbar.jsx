@@ -1,6 +1,7 @@
 import NavbarStyles from "./Navbar.module.css";
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useState, useEffect, useRef } from 'react';
+import { calculateChapterMapping, getCurrentChapter } from '../../utils/chapterMapping';
 
 export default function Navbar({ isLandingPage = true, currentSectionIndex = 0 }) {
   const navigate = useNavigate();
@@ -11,15 +12,8 @@ export default function Navbar({ isLandingPage = true, currentSectionIndex = 0 }
   const chaptersRef = useRef(null);
   const mobileOverlayRef = useRef(null);
 
-  // Chapter mapping with section ranges
-  const chapters = [
-    { id: 1, title: "Painter by the Wall", startSection: 2, endSection: 4 },
-    { id: 2, title: "Walls and Windows", startSection: 5, endSection: 8 },
-    { id: 3, title: "Bird droppings", startSection: 9, endSection: 15 },
-    { id: 4, title: "Download and Paint Like A Master", startSection: 16, endSection: 20 },
-    { id: 5, title: "Hidden treasures of creativity", startSection: 21, endSection: 25 },
-    { id: 6, title: "Center and Periphery", startSection: 26, endSection: 32 }
-  ];
+  // Dynamic chapter mapping based on mobile/desktop view
+  const chapters = calculateChapterMapping(isMobile);
 
   // Handle window resize for mobile detection
   useEffect(() => {
@@ -128,16 +122,7 @@ export default function Navbar({ isLandingPage = true, currentSectionIndex = 0 }
   };
 
   // Determine which chapter is currently active
-  const getCurrentChapter = () => {
-    // Convert currentSectionIndex to FullPage section number (add 1 for 1-based indexing)
-    const fullPageSectionIndex = currentSectionIndex + 1;
-    return chapters.find(chapter => 
-      fullPageSectionIndex >= chapter.startSection && 
-      fullPageSectionIndex <= chapter.endSection
-    );
-  };
-
-  const activeChapter = getCurrentChapter();
+  const activeChapter = getCurrentChapter(currentSectionIndex, isMobile);
 
   const navbarColor = isLandingPage ? 'white' : '#333';
 

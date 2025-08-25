@@ -1,6 +1,6 @@
 import "./App.css";
 import { useEffect, useState } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import FullPageWrapper from "./components/FullPageWrapper/FullPageWrapper";
 import Navbar from "./components/NavBar/Navbar";
 import BrushMouseIcon from "./components/Common/BrushMouseIcon/BrushMouseIcon";
@@ -10,11 +10,15 @@ import { withDelayedVisibility } from "./hoc/withDelayedVisibility/withDelayedVi
 const DelayedNavBar = withDelayedVisibility(Navbar, 1000);
 
 function App() {
+  const location = useLocation();
   const [isOnLandingSection, setIsOnLandingSection] = useState(true);
   const [isHoveringNavbar, setIsHoveringNavbar] = useState(false);
   const [showNavbar, setShowNavbar] = useState(false);
   const [currentSectionIndex, setCurrentSectionIndex] = useState(0);
   const [hasInitialFadeCompleted, setHasInitialFadeCompleted] = useState(false);
+  
+  // Check if we're on the home page
+  const isHomePage = location.pathname === '/';
   useEffect(() => {
     const handleOrientationChange = () => {
       if (window.matchMedia("(orientation: landscape)").matches) {
@@ -59,6 +63,20 @@ function App() {
     };
   }, []);
 
+  // Reset navigation state based on route changes
+  useEffect(() => {
+    if (!isHomePage) {
+      // Navigating away from home page - reset state
+      setIsOnLandingSection(false);
+      setShowNavbar(false);
+    } else {
+      // Navigating to home page - reset to landing state
+      setIsOnLandingSection(true);
+      setShowNavbar(false);
+      setCurrentSectionIndex(0);
+    }
+  }, [isHomePage]);
+
   return (
     <>
       {showNavbar && !isOnLandingSection && (
@@ -67,14 +85,14 @@ function App() {
           currentSectionIndex={currentSectionIndex}
         />
       )}
-      {isOnLandingSection && (
+      {isHomePage && isOnLandingSection && (
         <DelayedNavBar 
           isLandingPage={isOnLandingSection}
           currentSectionIndex={currentSectionIndex}
           skipAnimation={hasInitialFadeCompleted}
         />
       )}
-      <BrushMouseIcon isLandingPage={isOnLandingSection && !isHoveringNavbar} />
+      <BrushMouseIcon isLandingPage={isHomePage && isOnLandingSection && !isHoveringNavbar} />
       <Routes>
         <Route path="/" element={<FullPageWrapper />} />
         <Route path="/about" element={<AboutPage />} />

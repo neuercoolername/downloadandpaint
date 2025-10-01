@@ -3,13 +3,13 @@
   background-color: white;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   padding: 80px 20px 40px;
+  padding-left: 20%;
   font-family: inherit;
 }
 
 .content {
-  max-width: 800px;
   text-align: left;
   color: #333;
   line-height: 1.6;
@@ -70,30 +70,30 @@
   .aboutContainer {
     padding: 100px 15px 40px;
   }
-  
+
   .content {
     max-width: 100%;
     text-align: center;
   }
-  
+
   .projectInfo {
     font-size: 1.1rem;
   }
-  
+
   .contact {
     font-size: 1rem;
   }
-  
+
   .supportText {
     font-size: 1rem;
   }
-  
+
   .logoContainer {
     flex-direction: column;
     gap: 1.5rem;
     justify-content: center;
   }
-  
+
   .logo {
     max-height: 80px;
     max-width: 250px;
@@ -104,11 +104,11 @@
   .aboutContainer {
     padding: 120px 10px 40px;
   }
-  
+
   .logoContainer {
     gap: 1rem;
   }
-  
+
   .logo {
     max-height: 60px;
     max-width: 200px;

@@ -36,14 +36,19 @@ function App() {
         setHasInitialFadeCompleted(true);
       }
       
+      const isMobile = window.innerWidth <= 767;
+      
       if (sectionIndex === 0) {
         // Hide navbar when on landing page
         setShowNavbar(false);
+      } else if (isMobile) {
+        // Mobile: Always show navbar when not on landing page
+        setShowNavbar(true);
       } else if (direction === 'up') {
-        // Show navbar when user scrolls up (in content sections)
+        // Desktop: Show navbar when user scrolls up (in content sections)
         setShowNavbar(true);
       } else if (direction === 'down') {
-        // Hide navbar when user scrolls down (in content sections)
+        // Desktop: Hide navbar when user scrolls down (in content sections)
         setShowNavbar(false);
       }
     };

@@ -1,9 +1,8 @@
 import styles from "./ContentSection.module.css";
-import parse from 'html-react-parser';
+import parse from "html-react-parser";
 
 export default function ContentSection(props) {
-  const { contentObj, globalFootnotes = {} } = props;
-  
+  const { contentObj } = props;
 
   const renderTitle = () => {
     if (contentObj.title) {
@@ -14,22 +13,24 @@ export default function ContentSection(props) {
 
   const handleFootnoteHover = (event, footnoteIndex) => {
     const rect = event.target.getBoundingClientRect();
-    
+
     // Dispatch event to global handler
-    window.dispatchEvent(new CustomEvent('footnoteHover', {
-      detail: {
-        footnoteIndex,
-        position: {
-          x: rect.left + rect.width / 2,
-          y: rect.top - 40
-        }
-      }
-    }));
+    window.dispatchEvent(
+      new CustomEvent("footnoteHover", {
+        detail: {
+          footnoteIndex,
+          position: {
+            x: rect.left + rect.width / 2,
+            y: rect.top - 40,
+          },
+        },
+      })
+    );
   };
 
   const handleFootnoteLeave = () => {
-    // Dispatch event to global handler  
-    window.dispatchEvent(new CustomEvent('footnoteLeave'));
+    // Dispatch event to global handler
+    window.dispatchEvent(new CustomEvent("footnoteLeave"));
   };
 
   const renderTextWithFootnotes = (text, footnotes = []) => {
@@ -43,12 +44,16 @@ export default function ContentSection(props) {
       const footnoteNum = parseInt(num);
       return `<span class="${styles.footnoteRef}" data-footnote="${footnoteNum}">${match}</span>`;
     });
-    
+
     // Parse the HTML with React
     return parse(processedText, {
       replace: (domNode) => {
-        if (domNode.type === 'tag' && domNode.name === 'span' && domNode.attribs['data-footnote']) {
-          const footnoteNum = parseInt(domNode.attribs['data-footnote']);
+        if (
+          domNode.type === "tag" &&
+          domNode.name === "span" &&
+          domNode.attribs["data-footnote"]
+        ) {
+          const footnoteNum = parseInt(domNode.attribs["data-footnote"]);
           return (
             <span
               className={styles.footnoteRef}
@@ -59,13 +64,13 @@ export default function ContentSection(props) {
             </span>
           );
         }
-      }
+      },
     });
   };
 
   const renderContent = (item) => {
     if (!item) return "";
-    
+
     if (item.type === "text") {
       return (
         <div className={styles.textContent}>
@@ -130,14 +135,18 @@ export default function ContentSection(props) {
       return (
         <div className={styles.sectionContent}>
           {renderTitle()}
-          <div className={styles.leftContent}>{renderContent(contentObj.content[0])}</div>
+          <div className={styles.leftContent}>
+            {renderContent(contentObj.content[0])}
+          </div>
         </div>
       );
     case "right":
       return (
         <div className={styles.sectionContent}>
           {renderTitle()}
-          <div className={styles.rightContent}>{renderContent(contentObj.content[0])}</div>
+          <div className={styles.rightContent}>
+            {renderContent(contentObj.content[0])}
+          </div>
         </div>
       );
     case "side-by-side":

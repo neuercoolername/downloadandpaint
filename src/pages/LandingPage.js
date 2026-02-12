@@ -1,7 +1,4 @@
-import { Stage, Layer, Shape } from "react-konva";
-import { useState, useEffect, useRef, useCallback, useMemo } from "react";
-import ForeGroundImage from "../components/LandingPage/ForeGroundImage";
-import BackGroundImage from "../components/LandingPage/BackGroundImage";
+import { useState, useEffect, useRef, useCallback } from "react";
 import Headline from "../components/LandingPage/Headline";
 import StartText from "../components/LandingPage/StartText";
 import { interpolatedPoints as startPosition } from "../utilities/drawStartPosition";
@@ -35,118 +32,141 @@ const MobileTitle = () => (
 const DelayedMobileTitle = withDelayedVisibility(MobileTitle, 1000);
 
 const LandingPage = () => {
-  const [lines, setLines] = useState([startPosition]);
-  const lastUpdateTime = useRef(Date.now());
-  const [brushImage, setBrushImage] = useState(null);
-  const imageRef = useRef();
+  const canvasRef = useRef(null);
+  const brushImageRef = useRef(null);
+  const foregroundImageRef = useRef(null);
+  const lastPointRef = useRef(null);
+  const lastUpdateTimeRef = useRef(Date.now());
+  const isReadyRef = useRef(false);
 
-  // eslint-disable-next-line
   const [dimensions, setDimensions] = useState({
     height: window.innerHeight,
     width: window.innerWidth,
   });
 
-  useEffect(() => {
-    imageRef.current = new window.Image();
-    imageRef.current.src = "./images/brushstroke_shape.png";
+  const initCanvas = useCallback(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    const fgImg = foregroundImageRef.current;
+    const brushImg = brushImageRef.current;
 
-    const handleLoad = () => {
-      setBrushImage(imageRef.current);
-    };
+    // Draw foreground image as tiled pattern (matches Konva fillPatternImage)
+    const pattern = ctx.createPattern(fgImg, "repeat");
+    ctx.fillStyle = pattern;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    const handleError = (error) => {
-      console.error("Error loading image:", error);
-    };
+    // Draw initial start position strokes with destination-out
+    ctx.globalCompositeOperation = "destination-out";
+    startPosition.points.forEach((point) => {
+      ctx.save();
+      ctx.translate(point.x, point.y);
+      ctx.rotate(point.angle || 0);
+      ctx.drawImage(
+        brushImg,
+        -brushSize / 2,
+        -brushSize / 2,
+        brushSize,
+        brushSize
+      );
+      ctx.restore();
+    });
+    ctx.globalCompositeOperation = "source-over";
 
-    imageRef.current.addEventListener("load", handleLoad);
-    imageRef.current.addEventListener("error", handleError);
-
-    return () => {
-      if (imageRef.current) {
-        imageRef.current.removeEventListener("load", handleLoad);
-        imageRef.current.removeEventListener("error", handleError);
-      }
-    };
+    isReadyRef.current = true;
   }, []);
 
+  // Load brush and foreground images, then initialize canvas
+  useEffect(() => {
+    let cancelled = false;
+    const brushImg = new Image();
+    const fgImg = new Image();
+
+    const fgSrc =
+      window.innerWidth > 900
+        ? "./images/foreground-wide.jpg"
+        : "./images/foreground.jpg";
+
+    let loaded = 0;
+    const onLoad = () => {
+      loaded++;
+      if (loaded === 2 && !cancelled) {
+        brushImageRef.current = brushImg;
+        foregroundImageRef.current = fgImg;
+        initCanvas();
+      }
+    };
+
+    brushImg.addEventListener("load", onLoad);
+    fgImg.addEventListener("load", onLoad);
+    brushImg.src = "./images/brushstroke_shape.png";
+    fgImg.src = fgSrc;
+
+    return () => {
+      cancelled = true;
+      brushImg.removeEventListener("load", onLoad);
+      fgImg.removeEventListener("load", onLoad);
+    };
+  }, [initCanvas]);
+
+  // Handle resize
   useEffect(() => {
     const handleResize = () => {
       setDimensions({
         height: window.innerHeight,
         width: window.innerWidth,
       });
+      // Re-initialize canvas after resize (canvas clears when dimensions change)
+      if (foregroundImageRef.current && brushImageRef.current) {
+        setTimeout(() => initCanvas(), 0);
+      }
     };
     window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [initCanvas]);
 
-  // Memoize rendered shapes to prevent unnecessary re-renders
-  const renderedShapes = useMemo(() => {
-    return lines.map((line, i) => (
-      <Shape
-        key={i}
-        sceneFunc={(context, shape) => {
-          context.globalCompositeOperation = "destination-out";
-
-          line.points.forEach((point) => {
-            const x = point.x - brushSize / 2;
-            const y = point.y - brushSize / 2;
-
-            context.save();
-            context.translate(x + brushSize / 2, y + brushSize / 2);
-            context.rotate(point.angle || 0);
-            context.drawImage(
-              brushImage,
-              -brushSize / 2,
-              -brushSize / 2,
-              brushSize,
-              brushSize
-            );
-            context.restore();
-          });
-
-          context.fillStrokeShape(shape);
-        }}
-      />
-    ));
-  }, [lines, brushImage]);
-
+  // Draw brush stroke directly on canvas — no React state updates
   const handleMouseMove = useCallback((e) => {
     const now = Date.now();
-    if (now - lastUpdateTime.current < 16) return; // Throttle to ~60fps
-    lastUpdateTime.current = now;
+    if (now - lastUpdateTimeRef.current < 16) return;
+    lastUpdateTimeRef.current = now;
 
-    const stage = e.target.getStage();
-    const point = stage.getPointerPosition();
+    if (!isReadyRef.current) return;
 
-    setLines((lines) => {
-      const linesCopy = [...lines];
-      let lastLine = linesCopy[linesCopy.length - 1];
+    const canvas = canvasRef.current;
+    if (!canvas) return;
 
-      if (lastLine) {
-        const lastPoint = lastLine.points[lastLine.points.length - 1];
-        const dx = point.x - lastPoint.x;
-        const dy = point.y - lastPoint.y;
-        const distance = Math.sqrt(dx * dx + dy * dy);
+    const rect = canvas.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
 
-        if (distance < 3) return linesCopy;
+    const prev = lastPointRef.current;
+    let angle = 0;
 
-        const angle = Math.atan2(dy, dx);
+    if (prev) {
+      const dx = x - prev.x;
+      const dy = y - prev.y;
+      const distance = Math.sqrt(dx * dx + dy * dy);
+      if (distance < 3) return;
+      angle = Math.atan2(dy, dx);
+    }
 
-        lastLine = {
-          ...lastLine,
-          points: [...lastLine.points, { ...point, angle }],
-        };
-        linesCopy[linesCopy.length - 1] = lastLine;
-      } else {
-        lastLine = { points: [{ ...point, angle: 0 }] };
-        linesCopy.push(lastLine);
-      }
+    lastPointRef.current = { x, y };
 
-      return linesCopy;
-    });
+    const ctx = canvas.getContext("2d");
+    ctx.globalCompositeOperation = "destination-out";
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.rotate(angle);
+    ctx.drawImage(
+      brushImageRef.current,
+      -brushSize / 2,
+      -brushSize / 2,
+      brushSize,
+      brushSize
+    );
+    ctx.restore();
+    ctx.globalCompositeOperation = "source-over";
   }, []);
 
   // Check if mobile view
@@ -174,36 +194,55 @@ const LandingPage = () => {
     );
   }
 
+  const bgSrc =
+    window.innerWidth > 900
+      ? "./images/background-wide.jpg"
+      : "./images/background.jpg";
+
   return (
-    <div className="cursor-none" style={{ cursor: "none" }}>
-      <Stage
-        width={window.innerWidth}
-        height={window.innerHeight}
-        onMousemove={handleMouseMove}
-      >
-        <Layer className="konvaBackground">
-          <BackGroundImage
-            src={
-              window.innerWidth > 900
-                ? "./images/background-wide.jpg"
-                : "./images/background.jpg"
-            }
-          />
-          <Headline />
-        </Layer>
+    <div
+      className="cursor-none"
+      style={{
+        cursor: "none",
+        position: "relative",
+        width: "100vw",
+        height: "100vh",
+        overflow: "hidden",
+      }}
+    >
+      {/* Background image */}
+      <div
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+          backgroundImage: `url(${bgSrc})`,
+          backgroundRepeat: "repeat",
+          backgroundPosition: "top left",
+          backgroundSize: "auto",
+          zIndex: 0,
+        }}
+      />
 
-        <Layer>
-          <ForeGroundImage
-            src={
-              window.innerWidth > 900
-                ? "./images/foreground-wide.jpg"
-                : "./images/foreground.jpg"
-            }
-          />
+      {/* Headline text (revealed as foreground is erased) */}
+      <Headline />
 
-          {brushImage && renderedShapes}
-        </Layer>
-      </Stage>
+      {/* Foreground canvas (erased by brush strokes to reveal background + headline) */}
+      <canvas
+        ref={canvasRef}
+        width={dimensions.width}
+        height={dimensions.height}
+        onMouseMove={handleMouseMove}
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          zIndex: 2,
+        }}
+      />
+
       <StartText />
     </div>
   );

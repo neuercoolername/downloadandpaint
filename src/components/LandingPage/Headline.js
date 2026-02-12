@@ -1,97 +1,91 @@
-import React from "react";
-import { Rect } from "react-konva";
+import { useState, useEffect, useCallback } from "react";
 import fontSizeLineHeight from "../../utilities/calcFontSizeLineHeight";
 
-export default class Headline extends React.Component {
-  state = {
-    text: "Download and Paint",
-    canvas: null,
-    textsplit: ["Download", "and", "Paint"],
-    fontSizeHeading: null,
-    lineHightHeading: null,
+function computeStyles() {
+  const { innerWidth, innerHeight } = window;
+  const entry =
+    fontSizeLineHeight[
+      Object.keys(fontSizeLineHeight).find((key) => innerWidth <= Number(key))
+    ];
+  const imageSrc =
+    innerWidth > 900
+      ? "./images/foreground-wide.jpg"
+      : "./images/foreground.jpg";
+
+  // Replicate x-offset from the old canvas fillText positioning
+  const xOffset =
+    innerWidth < 576
+      ? Math.max(innerWidth < 360 ? 10 : Math.min(innerWidth / 12, 100), 0)
+      : 0;
+
+  // Replicate y-offset from the old canvas fillText positioning
+  // Old code: y = lineHeight * i + lineHeight (desktop)
+  // Old code: y = 20 + (lineHeight * i + lineHeight + innerHeight / 3.5) (mobile-ish < 576)
+  // Canvas fillText uses baseline; approximate top offset by subtracting ~fontSize
+  const yOffset =
+    innerWidth < 576
+      ? 20 + entry.lineHeight + innerHeight / 3.5 - entry.fontSize
+      : entry.lineHeight - entry.fontSize;
+
+  return {
+    fontSize: entry.fontSize,
+    lineHeight: entry.lineHeight,
+    imageSrc,
+    xOffset,
+    yOffset,
   };
+}
 
-  calcFontSize() {
-    const { innerWidth } = window;
-    const { fontSize, lineHeight } =
-      fontSizeLineHeight[
-        Object.keys(fontSizeLineHeight).find((key) => innerWidth <= Number(key))
-      ];
-    this.setState({ fontSizeHeading: fontSize, lineHightHeading: lineHeight });
+export default function Headline() {
+  const [styles, setStyles] = useState(computeStyles);
 
-    const image = new window.Image();
-    image.onload = () => {
-      const canvas = document.createElement("canvas");
-      const ctx = canvas.getContext("2d");
+  const handleResize = useCallback(() => {
+    setStyles(computeStyles());
+  }, []);
 
-      ctx.canvas.width = window.innerWidth;
-      ctx.canvas.height = window.innerHeight;
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [handleResize]);
 
-      ctx.save();
-      ctx.beginPath();
+  const words = ["Download", "and", "Paint"];
 
-      // put text on canvas
-      ctx.font = `700 ${this.state.fontSizeHeading}px 'Inter', sans-serif`;
-      this.state.textsplit.forEach((element, i) => {
-        ctx.fillText(
-          element,
-          window.innerWidth < 576
-            ? Math.max(
-                window.innerWidth < 360
-                  ? 10
-                  : Math.min(window.innerWidth / 12, 100),
-                0
-              )
-            : 0,
-          window.innerWidth < 576
-            ? 20 +
-                (this.state.lineHightHeading * i +
-                  this.state.lineHightHeading +
-                  window.innerHeight / 3.5)
-            : this.state.lineHightHeading * i + this.state.lineHightHeading
-        );
-      });
-      ctx.fill();
-
-      // use compositing to draw the background image
-      // only where the text has been drawn
-      ctx.beginPath();
-      ctx.globalCompositeOperation = "source-in";
-      ctx.drawImage(image, 0, 0);
-      ctx.restore();
-
-      this.setState({
-        canvas: canvas,
-      });
-    };
-    image.src =
-      window.innerWidth > 900
-        ? "./images/foreground-wide.jpg"
-        : "./images/foreground.jpg";
-  }
-
-  componentDidMount() {
-    this.calcFontSize();
-
-    const resizeHandler = () => {
-      this.calcFontSize();
-    };
-
-    window.addEventListener("resize", resizeHandler);
-    this.resizeHandler = resizeHandler;
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener("resize", this.resizeHandler);
-  }
-
-  render = () => {
-    return (
-      <Rect
-        width={window.innerWidth}
-        height={window.innerHeight}
-        fillPatternImage={this.state.canvas}
-      />
-    );
-  };
+  return (
+    <div
+      style={{
+        position: "absolute",
+        top: 0,
+        left: 0,
+        width: "100%",
+        height: "100%",
+        pointerEvents: "none",
+        zIndex: 1,
+        paddingLeft: `${styles.xOffset}px`,
+        paddingTop: `${styles.yOffset}px`,
+      }}
+    >
+      {words.map((word) => (
+        <div
+          key={word}
+          style={{
+            fontSize: `${styles.fontSize}px`,
+            lineHeight: `${styles.lineHeight}px`,
+            fontFamily: "'Inter', sans-serif",
+            fontWeight: 700,
+            backgroundImage: `url(${styles.imageSrc})`,
+            backgroundAttachment: "fixed",
+            backgroundPosition: "top left",
+            backgroundSize: "auto",
+            backgroundRepeat: "repeat",
+            WebkitBackgroundClip: "text",
+            backgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            color: "transparent",
+          }}
+        >
+          {word}
+        </div>
+      ))}
+    </div>
+  );
 }

@@ -111,11 +111,14 @@ const LandingPage = () => {
 
     brushImg.addEventListener("load", onLoad);
     fgImg.addEventListener("load", onLoad);
+    brushImg.addEventListener("error", onLoad);
+    fgImg.addEventListener("error", onLoad);
     brushImg.src = "./images/brushstroke_shape.png";
     fgImg.src = fgSrc;
 
     if (isDesktop) {
       bgImg.addEventListener("load", onLoad);
+      bgImg.addEventListener("error", onLoad);
       bgImg.src = bgSrc;
     }
 
@@ -124,6 +127,9 @@ const LandingPage = () => {
       brushImg.removeEventListener("load", onLoad);
       fgImg.removeEventListener("load", onLoad);
       bgImg.removeEventListener("load", onLoad);
+      brushImg.removeEventListener("error", onLoad);
+      fgImg.removeEventListener("error", onLoad);
+      bgImg.removeEventListener("error", onLoad);
     };
   }, [initCanvas]);
 

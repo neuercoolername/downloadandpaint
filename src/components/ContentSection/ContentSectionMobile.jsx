@@ -6,7 +6,7 @@ import styles from './ContentSectionMobile.module.css';
 
 export default function ContentSectionMobile(props) {
   const { contentObj, globalFootnotes = {} } = props;
-  const videoRefs = useRef([]);
+  const videoRefs = useRef(new Set());
 
   useEffect(() => {
     const handleSectionChange = (event) => {
@@ -33,6 +33,7 @@ export default function ContentSectionMobile(props) {
     return () => {
       window.removeEventListener('sectionChange', handleSectionChange);
       window.removeEventListener('sectionVisible', handleSectionVisible);
+      videoRefs.current.clear();
     };
   }, []);
 
@@ -97,11 +98,7 @@ export default function ContentSectionMobile(props) {
       return (
         <div className={styles.mediaContainer}>
           <video
-            ref={(el) => {
-              if (el && !videoRefs.current.includes(el)) {
-                videoRefs.current.push(el);
-              }
-            }}
+            ref={(el) => { if (el) videoRefs.current.add(el); }}
             src={item.mediaUrl}
             autoPlay={item.autoplay}
             loop={item.loop}

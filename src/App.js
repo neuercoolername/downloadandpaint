@@ -1,6 +1,7 @@
 import "./App.css";
 import { useEffect, useState } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
+import { MOBILE_BREAKPOINT } from "./constants/constants";
 import FullPageWrapper from "./components/FullPageWrapper/FullPageWrapper";
 import Navbar from "./components/NavBar/Navbar";
 import BrushMouseIcon from "./components/Common/BrushMouseIcon/BrushMouseIcon";
@@ -45,7 +46,7 @@ function App() {
         setHasInitialFadeCompleted(true);
       }
       
-      const isMobile = window.innerWidth <= 767;
+      const isMobile = window.innerWidth <= MOBILE_BREAKPOINT;
       
       if (sectionIndex === 0) {
         // Hide navbar when on landing page

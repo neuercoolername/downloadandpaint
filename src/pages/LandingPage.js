@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import Headline from "../components/LandingPage/Headline";
 import StartText from "../components/LandingPage/StartText";
 import { interpolatedPoints as startPosition } from "../utilities/drawStartPosition";
-import { brushSize } from "../constants/constants";
+import { brushSize, MOBILE_BREAKPOINT } from "../constants/constants";
 import { withDelayedVisibility } from "../hoc/withDelayedVisibility/withDelayedVisibility";
 import LoadingOverlay from "../components/Common/LoadingOverlay/LoadingOverlay";
 
@@ -85,7 +85,7 @@ const LandingPage = () => {
     const fgImg = new Image();
     const bgImg = new Image();
 
-    const isDesktop = window.innerWidth > 767;
+    const isDesktop = window.innerWidth > MOBILE_BREAKPOINT;
     const fgSrc =
       window.innerWidth > 900
         ? "./images/foreground-wide.webp"
@@ -188,7 +188,7 @@ const LandingPage = () => {
   }, []);
 
   // Check if mobile view
-  const isMobile = window.innerWidth <= 767;
+  const isMobile = window.innerWidth <= MOBILE_BREAKPOINT;
 
   if (isMobile) {
     // Mobile: Use static image

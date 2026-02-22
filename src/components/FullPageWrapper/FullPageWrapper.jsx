@@ -5,8 +5,9 @@ import LandingPage from "../../pages/LandingPage";
 import ContentSection from "../ContentSection/ContentSection";
 import ContentSectionMobile from "../ContentSection/ContentSectionMobile";
 import contentArray from "../../contentArray.js";
+import { MOBILE_BREAKPOINT } from "../../constants/constants";
 
-const isMobileView = window.innerWidth <= 767;
+const isMobileView = window.innerWidth <= MOBILE_BREAKPOINT;
 
 // Build global footnotes mapping
 const buildGlobalFootnotes = () => {

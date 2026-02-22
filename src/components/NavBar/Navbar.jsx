@@ -2,13 +2,14 @@ import NavbarStyles from "./Navbar.module.css";
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useState, useEffect, useRef } from 'react';
 import { calculateChapterMapping, getCurrentChapter } from '../../utils/chapterMapping';
+import { MOBILE_BREAKPOINT } from '../../constants/constants';
 
 export default function Navbar({ isLandingPage = true, currentSectionIndex = 0 }) {
   const navigate = useNavigate();
   const location = useLocation();
   const [isChaptersDropdownOpen, setIsChaptersDropdownOpen] = useState(false);
   const [isMobileOverlayOpen, setIsMobileOverlayOpen] = useState(false);
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 767);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= MOBILE_BREAKPOINT);
   const chaptersRef = useRef(null);
   const mobileOverlayRef = useRef(null);
 
@@ -18,7 +19,7 @@ export default function Navbar({ isLandingPage = true, currentSectionIndex = 0 }
   // Handle window resize for mobile detection
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth <= 767);
+      setIsMobile(window.innerWidth <= MOBILE_BREAKPOINT);
     };
 
     window.addEventListener('resize', handleResize);

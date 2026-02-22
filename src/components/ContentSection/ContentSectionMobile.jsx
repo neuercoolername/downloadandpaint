@@ -1,5 +1,6 @@
 import parse from 'html-react-parser';
 import { useEffect, useRef } from 'react';
+import { MOBILE_BREAKPOINT } from '../../constants/constants';
 
 export default function ContentSectionMobile(props) {
   const { contentObj, globalFootnotes = {} } = props;
@@ -35,7 +36,7 @@ export default function ContentSectionMobile(props) {
   
   const handleFootnoteHover = (event, footnoteIndex) => {
     // Use center positioning for mobile instead of cursor position
-    const isMobile = window.innerWidth <= 768;
+    const isMobile = window.innerWidth <= MOBILE_BREAKPOINT;
     
     let position;
     if (isMobile) {

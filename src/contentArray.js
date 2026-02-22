@@ -9,7 +9,7 @@ const contentArray = [
       },
       {
         type: "image",
-        mediaUrl: "/images/contentSections/M0590_20190424-lowres.jpg",
+        mediaUrl: "/images/contentSections/M0590_20190424-lowres.webp",
         caption: "Painter by the Wall, 1942, oil on linen, Munch Museum Oslo",
       },
     ],
@@ -20,7 +20,7 @@ const contentArray = [
     content: [
       {
         type: "image",
-        mediaUrl: "/images/contentSections/auschnitt2.jpg",
+        mediaUrl: "/images/contentSections/auschnitt2.webp",
       },
       {
         type: "text",
@@ -41,7 +41,7 @@ const contentArray = [
       },
       {
         type: "image",
-        mediaUrl: "/images/contentSections/044680arf005n.jpg",
+        mediaUrl: "/images/contentSections/044680arf005n.webp",
         caption:
           "Woodcut Illustration of Alberti's window by Hieronymus Rodler",
       },
@@ -74,7 +74,7 @@ const contentArray = [
       },
       {
         type: "image",
-        mediaUrl: "/images/contentSections/IMG_1930.JPG",
+        mediaUrl: "/images/contentSections/IMG_1930.webp",
         caption: "A 3-d print leaning against the window of my studio",
       },
     ],
@@ -85,7 +85,7 @@ const contentArray = [
     content: [
       {
         type: "image",
-        mediaUrl: "/images/contentSections/IMG_1869.JPG",
+        mediaUrl: "/images/contentSections/IMG_1869.webp",
         caption: "A squirrel peeking through the window into my studio",
       },
     ],
@@ -96,7 +96,7 @@ const contentArray = [
     content: [
       {
         type: "image",
-        mediaUrl: "/images/contentSections/auschnitt.jpg",
+        mediaUrl: "/images/contentSections/auschnitt.webp",
       },
       {
         type: "text",
@@ -119,7 +119,7 @@ const contentArray = [
       },
       {
         type: "image",
-        mediaUrl: "/images/contentSections/1 variante 2.jpg",
+        mediaUrl: "/images/contentSections/1 variante 2.webp",
       },
     ],
     layout: "side-by-side",
@@ -129,12 +129,12 @@ const contentArray = [
     content: [
       {
         type: "image",
-        mediaUrl: "/images/contentSections/IMG_0269.jpg",
+        mediaUrl: "/images/contentSections/IMG_0269.webp",
         caption: "Munch's studio in Ekeley today",
       },
       {
         type: "image",
-        mediaUrl: "/images/contentSections/IMG_0263.jpg",
+        mediaUrl: "/images/contentSections/IMG_0263.webp",
       },
     ],
     layout: "side-by-side",
@@ -158,7 +158,7 @@ const contentArray = [
     content: [
       {
         type: "image",
-        mediaUrl: "/images/contentSections/IMG_1212.JPG",
+        mediaUrl: "/images/contentSections/IMG_1212.webp",
       },
     ],
     layout: "full",
@@ -231,7 +231,7 @@ const contentArray = [
       },
       {
         type: "image",
-        mediaUrl: "/images/contentSections/versucheins-Kopie-ausschnitt.jpg",
+        mediaUrl: "/images/contentSections/versucheins-Kopie-ausschnitt.webp",
       },
     ],
     layout: "side-by-side",
@@ -245,7 +245,7 @@ const contentArray = [
       },
       {
         type: "image",
-        mediaUrl: "/images/contentSections/bild-9.JPG",
+        mediaUrl: "/images/contentSections/bild-9.webp",
         caption:
           "A page in Galloways <i>Interface Effect</i> on the interface of World of Warcraft",
       },
@@ -261,7 +261,7 @@ const contentArray = [
       },
       {
         type: "image",
-        mediaUrl: "/images/contentSections/bild-10.jpg",
+        mediaUrl: "/images/contentSections/bild-10.webp",
         caption:
           "Paula Modersohn-Becker, Still Life with Apples and Green Glass,1906,oil on cardboard on parquetted plywood, 33,2 x 42,9 cm",
       },
@@ -287,11 +287,11 @@ const contentArray = [
     content: [
       {
         type: "image",
-        mediaUrl: "/images/contentSections/bild-18.JPG",
+        mediaUrl: "/images/contentSections/bild-18.webp",
       },
       {
         type: "image",
-        mediaUrl: "/images/contentSections/bild-19.JPG",
+        mediaUrl: "/images/contentSections/bild-19.webp",
       },
     ],
     layout: "side-by-side",
@@ -305,7 +305,7 @@ const contentArray = [
       },
       {
         type: "image",
-        mediaUrl: "/images/contentSections/grave.jpg",
+        mediaUrl: "/images/contentSections/grave.webp",
         caption: "Me standing in front of Munch's grave",
       },
     ],
@@ -320,7 +320,7 @@ const contentArray = [
       },
       {
         type: "image",
-        mediaUrl: "/images/contentSections/IMG_0225.jpg",
+        mediaUrl: "/images/contentSections/IMG_0225.webp",
       },
     ],
     layout: "side-by-side",
@@ -368,7 +368,7 @@ const contentArray = [
       },
       {
         type: "image",
-        mediaUrl: "/images/contentSections/vorderseite.jpg",
+        mediaUrl: "/images/contentSections/vorderseite.webp",
       },
     ],
     layout: "side-by-side",
@@ -382,7 +382,7 @@ const contentArray = [
       },
       {
         type: "image",
-        mediaUrl: "/images/contentSections/IMG_0229.jpg",
+        mediaUrl: "/images/contentSections/IMG_0229.webp",
         caption: "<i>Painter by the Wall</i> being wheeled out of the archive",
       },
     ],
@@ -414,7 +414,7 @@ const contentArray = [
       },
       {
         type: "image",
-        mediaUrl: "/images/contentSections/Unbenannt-1-Kopie.jpg",
+        mediaUrl: "/images/contentSections/Unbenannt-1-Kopie.webp",
       },
     ],
     layout: "side-by-side",

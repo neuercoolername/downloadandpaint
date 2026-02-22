@@ -80,7 +80,7 @@ export default function ContentSection(props) {
     } else if (item.type === "image") {
       return (
         <div className={styles.imageContainer}>
-          <img src={item.mediaUrl} alt={item.caption || ""} />
+          <img src={item.mediaUrl} alt={item.caption || ""} loading="lazy" />
           {item.caption && <p className={styles.caption}>{item.caption}</p>}
         </div>
       );
@@ -93,6 +93,7 @@ export default function ContentSection(props) {
             loop={item.loop}
             muted={item.muted}
             playsInline
+            preload="none"
           />
         </div>
       );
@@ -118,7 +119,7 @@ export default function ContentSection(props) {
           <div className={styles.sectionContent}>
             {renderTitle()}
             <div className={styles.imageContainer}>
-              <img src={contentObj.content[0].mediaUrl} alt="" />
+              <img src={contentObj.content[0].mediaUrl} alt="" loading="lazy" />
             </div>
           </div>
         );

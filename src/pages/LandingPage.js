@@ -78,21 +78,30 @@ const LandingPage = () => {
     isReadyRef.current = true;
   }, []);
 
-  // Load brush and foreground images, then initialize canvas
+  // Load brush, foreground, and background images, then initialize canvas
   useEffect(() => {
     let cancelled = false;
     const brushImg = new Image();
     const fgImg = new Image();
+    const bgImg = new Image();
 
+    const isDesktop = window.innerWidth > 767;
     const fgSrc =
       window.innerWidth > 900
         ? "./images/foreground-wide.webp"
         : "./images/foreground.webp";
+    const bgSrc =
+      window.innerWidth > 900
+        ? "./images/background-wide.webp"
+        : "./images/background.webp";
 
+    // On desktop wait for fg + bg + brush before revealing.
+    // On mobile the overlay is dismissed by the <img> onLoad instead.
+    const threshold = isDesktop ? 3 : 2;
     let loaded = 0;
     const onLoad = () => {
       loaded++;
-      if (loaded === 2 && !cancelled) {
+      if (loaded === threshold && !cancelled) {
         brushImageRef.current = brushImg;
         foregroundImageRef.current = fgImg;
         initCanvas();
@@ -105,10 +114,16 @@ const LandingPage = () => {
     brushImg.src = "./images/brushstroke_shape.png";
     fgImg.src = fgSrc;
 
+    if (isDesktop) {
+      bgImg.addEventListener("load", onLoad);
+      bgImg.src = bgSrc;
+    }
+
     return () => {
       cancelled = true;
       brushImg.removeEventListener("load", onLoad);
       fgImg.removeEventListener("load", onLoad);
+      bgImg.removeEventListener("load", onLoad);
     };
   }, [initCanvas]);
 

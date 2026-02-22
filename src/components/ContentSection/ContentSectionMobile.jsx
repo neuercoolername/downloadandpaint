@@ -138,10 +138,11 @@ export default function ContentSectionMobile(props) {
           marginBottom: '0.25rem',
           width: '100%'
         }}>
-          <img 
-            src={item.mediaUrl} 
-            alt={item.caption || ""} 
-            style={{ 
+          <img
+            src={item.mediaUrl}
+            alt={item.caption || ""}
+            loading="lazy"
+            style={{
               maxWidth: '95%', 
               height: 'auto', 
               maxHeight: '70vh',
@@ -182,7 +183,8 @@ export default function ContentSectionMobile(props) {
             loop={item.loop}
             muted={item.muted}
             playsInline
-            style={{ 
+            preload="none"
+            style={{
               maxWidth: '95%', 
               height: 'auto', 
               maxHeight: '70vh',

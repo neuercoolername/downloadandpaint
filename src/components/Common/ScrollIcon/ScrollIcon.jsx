@@ -1,5 +1,5 @@
 import scrollIconStyle from "./scrollIcon.module.css";
-import { MOBILE_BREAKPOINT } from "../../constants/constants";
+import { MOBILE_BREAKPOINT } from "../../../constants/constants";
 
 export default function ScrollIcon() {
   const isMobile = window.innerWidth <= MOBILE_BREAKPOINT;

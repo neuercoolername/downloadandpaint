@@ -1,5 +1,5 @@
 import styles from "./ContentSection.module.css";
-import parse from "html-react-parser";
+import { renderTextWithFootnotes } from "../../utils/renderTextWithFootnotes";
 
 export default function ContentSection(props) {
   const { contentObj } = props;
@@ -33,48 +33,17 @@ export default function ContentSection(props) {
     window.dispatchEvent(new CustomEvent("footnoteLeave"));
   };
 
-  const renderTextWithFootnotes = (text, footnotes = []) => {
-    if (!footnotes || footnotes.length === 0) {
-      return parse(text);
-    }
-
-    // Replace footnote references like [1] with hoverable spans (as HTML string)
-    const footnoteRegex = /\[(\d+)\]/g;
-    let processedText = text.replace(footnoteRegex, (match, num) => {
-      const footnoteNum = parseInt(num);
-      return `<span class="${styles.footnoteRef}" data-footnote="${footnoteNum}">${match}</span>`;
-    });
-
-    // Parse the HTML with React
-    return parse(processedText, {
-      replace: (domNode) => {
-        if (
-          domNode.type === "tag" &&
-          domNode.name === "span" &&
-          domNode.attribs["data-footnote"]
-        ) {
-          const footnoteNum = parseInt(domNode.attribs["data-footnote"]);
-          return (
-            <span
-              className={styles.footnoteRef}
-              onMouseEnter={(e) => handleFootnoteHover(e, footnoteNum)}
-              onMouseLeave={handleFootnoteLeave}
-            >
-              {domNode.children[0]?.data || `[${footnoteNum}]`}
-            </span>
-          );
-        }
-      },
-    });
-  };
-
   const renderContent = (item) => {
     if (!item) return "";
 
     if (item.type === "text") {
       return (
         <div className={styles.textContent}>
-          {renderTextWithFootnotes(item.text || "", item.footnotes)}
+          {renderTextWithFootnotes(item.text || "", item.footnotes, (num) => ({
+            className: styles.footnoteRef,
+            onMouseEnter: (e) => handleFootnoteHover(e, num),
+            onMouseLeave: handleFootnoteLeave,
+          }))}
         </div>
       );
     } else if (item.type === "image") {

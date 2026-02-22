@@ -1,6 +1,7 @@
 import parse from 'html-react-parser';
 import { useEffect, useRef } from 'react';
 import { MOBILE_BREAKPOINT } from '../../constants/constants';
+import { renderTextWithFootnotes } from '../../utils/renderTextWithFootnotes';
 
 export default function ContentSectionMobile(props) {
   const { contentObj, globalFootnotes = {} } = props;
@@ -70,39 +71,6 @@ export default function ContentSectionMobile(props) {
     window.dispatchEvent(new CustomEvent('footnoteLeave'));
   };
 
-  const renderTextWithFootnotes = (text, footnotes = []) => {
-    if (!footnotes || footnotes.length === 0) {
-      return parse(text);
-    }
-
-    // Replace footnote references like [1] with hoverable spans (as HTML string)
-    const footnoteRegex = /\[(\d+)\]/g;
-    let processedText = text.replace(footnoteRegex, (match, num) => {
-      const footnoteNum = parseInt(num);
-      return `<span class="footnote-ref" data-footnote="${footnoteNum}">${match}</span>`;
-    });
-    
-    // Parse the HTML with React
-    return parse(processedText, {
-      replace: (domNode) => {
-        if (domNode.type === 'tag' && domNode.name === 'span' && domNode.attribs['data-footnote']) {
-          const footnoteNum = parseInt(domNode.attribs['data-footnote']);
-          return (
-            <span
-              style={{ cursor: 'pointer', textDecoration: 'underline', color: 'blue' }}
-              onClick={(e) => {
-                e.preventDefault();
-                handleFootnoteHover(e, footnoteNum);
-              }}
-            >
-              {domNode.children[0]?.data || `[${footnoteNum}]`}
-            </span>
-          );
-        }
-      }
-    });
-  };
-
   const renderTitle = () => {
     if (contentObj.title) {
       return <h4 style={{ 
@@ -127,7 +95,10 @@ export default function ContentSectionMobile(props) {
           lineHeight: '1.3',
           padding: '0'
         }}>
-          {renderTextWithFootnotes(item.text || "", item.footnotes)}
+          {renderTextWithFootnotes(item.text || "", item.footnotes, (num) => ({
+            style: { cursor: 'pointer', textDecoration: 'underline', color: 'blue' },
+            onClick: (e) => { e.preventDefault(); handleFootnoteHover(e, num); },
+          }))}
         </div>
       );
     } else if (item.type === "image") {

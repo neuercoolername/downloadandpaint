@@ -20,6 +20,15 @@ function App() {
   // Check if we're on the home page
   const isHomePage = location.pathname === '/';
   useEffect(() => {
+    const setVh = () => {
+      document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`);
+    };
+    setVh();
+    window.addEventListener('resize', setVh);
+    return () => window.removeEventListener('resize', setVh);
+  }, []);
+
+  useEffect(() => {
     const handleOrientationChange = () => {
       if (window.matchMedia("(orientation: landscape)").matches) {
         window.screen.orientation.lock("portrait-primary");

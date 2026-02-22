@@ -203,7 +203,7 @@ export default function ContentSectionMobile(props) {
     return (
       <div key={contentObj.id} className="section" style={{ 
         padding: '5px 10px', 
-        height: '100vh', 
+        height: 'calc(var(--vh, 1vh) * 100)', 
         display: 'flex', 
         flexDirection: 'column',
         boxSizing: 'border-box'
@@ -220,7 +220,7 @@ export default function ContentSectionMobile(props) {
       <>
         <div key={`${contentObj.id}-1`} className="section" style={{ 
           padding: '5px 10px', 
-          height: '100vh', 
+          height: 'calc(var(--vh, 1vh) * 100)', 
           display: 'flex', 
           flexDirection: 'column',
           boxSizing: 'border-box'
@@ -232,7 +232,7 @@ export default function ContentSectionMobile(props) {
         </div>
         <div key={`${contentObj.id}-2`} className="section" style={{ 
           padding: '5px 10px', 
-          height: '100vh', 
+          height: 'calc(var(--vh, 1vh) * 100)', 
           display: 'flex', 
           flexDirection: 'column',
           boxSizing: 'border-box'

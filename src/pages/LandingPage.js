@@ -193,7 +193,7 @@ const LandingPage = () => {
   if (isMobile) {
     // Mobile: Use static image
     return (
-      <div style={{ position: "relative", width: "100vw", height: "100vh" }}>
+      <div style={{ position: "relative", width: "100vw", height: "calc(var(--vh, 1vh) * 100)" }}>
         <img
           src="./images/mobile-landing-page.webp"
           alt="Landing Page"
@@ -226,7 +226,7 @@ const LandingPage = () => {
         cursor: "none",
         position: "relative",
         width: "100vw",
-        height: "100vh",
+        height: "calc(var(--vh, 1vh) * 100)",
         overflow: "hidden",
       }}
     >

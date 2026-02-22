@@ -4,6 +4,7 @@ import StartText from "../components/LandingPage/StartText";
 import { interpolatedPoints as startPosition } from "../utilities/drawStartPosition";
 import { brushSize } from "../constants/constants";
 import { withDelayedVisibility } from "../hoc/withDelayedVisibility/withDelayedVisibility";
+import LoadingOverlay from "../components/Common/LoadingOverlay/LoadingOverlay";
 
 // Create a delayed title component
 const MobileTitle = () => (
@@ -38,6 +39,7 @@ const LandingPage = () => {
   const lastPointRef = useRef(null);
   const lastUpdateTimeRef = useRef(Date.now());
   const isReadyRef = useRef(false);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   const [dimensions, setDimensions] = useState({
     height: window.innerHeight,
@@ -84,8 +86,8 @@ const LandingPage = () => {
 
     const fgSrc =
       window.innerWidth > 900
-        ? "./images/foreground-wide.jpg"
-        : "./images/foreground.jpg";
+        ? "./images/foreground-wide.webp"
+        : "./images/foreground.webp";
 
     let loaded = 0;
     const onLoad = () => {
@@ -94,6 +96,7 @@ const LandingPage = () => {
         brushImageRef.current = brushImg;
         foregroundImageRef.current = fgImg;
         initCanvas();
+        setIsLoaded(true);
       }
     };
 
@@ -177,8 +180,9 @@ const LandingPage = () => {
     return (
       <div style={{ position: "relative", width: "100vw", height: "100vh" }}>
         <img
-          src="./images/mobile-landing-page.png"
+          src="./images/mobile-landing-page.webp"
           alt="Landing Page"
+          onLoad={() => setIsLoaded(true)}
           style={{
             width: "100%",
             height: "100%",
@@ -190,14 +194,15 @@ const LandingPage = () => {
         />
         <DelayedMobileTitle />
         <StartText />
+        <LoadingOverlay isLoaded={isLoaded} />
       </div>
     );
   }
 
   const bgSrc =
     window.innerWidth > 900
-      ? "./images/background-wide.jpg"
-      : "./images/background.jpg";
+      ? "./images/background-wide.webp"
+      : "./images/background.webp";
 
   return (
     <div
@@ -244,6 +249,7 @@ const LandingPage = () => {
       />
 
       <StartText />
+      <LoadingOverlay isLoaded={isLoaded} />
     </div>
   );
 };

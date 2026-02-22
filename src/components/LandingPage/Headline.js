@@ -9,8 +9,8 @@ function computeStyles() {
     ];
   const imageSrc =
     innerWidth > 900
-      ? "./images/foreground-wide.jpg"
-      : "./images/foreground.jpg";
+      ? "./images/foreground-wide.webp"
+      : "./images/foreground.webp";
 
   // Replicate x-offset from the old canvas fillText positioning
   const xOffset =

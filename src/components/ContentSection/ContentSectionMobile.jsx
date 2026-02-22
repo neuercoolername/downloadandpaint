@@ -4,14 +4,15 @@ import { MOBILE_BREAKPOINT } from '../../constants/constants';
 import { renderTextWithFootnotes } from '../../utils/renderTextWithFootnotes';
 import styles from './ContentSectionMobile.module.css';
 
-export default function ContentSectionMobile(props) {
-  const { contentObj, globalFootnotes = {} } = props;
+export default function ContentSectionMobile({contentObj}) {
   const videoRefs = useRef(new Set());
 
   useEffect(() => {
+    const videoSet = videoRefs.current;
+
     const handleSectionChange = (event) => {
       // Pause all videos when section changes
-      videoRefs.current.forEach(video => {
+      videoSet.forEach(video => {
         if (video && !video.paused) {
           video.pause();
         }
@@ -20,7 +21,7 @@ export default function ContentSectionMobile(props) {
 
     const handleSectionVisible = () => {
       // Resume autoplay videos when section becomes visible again
-      videoRefs.current.forEach(video => {
+      videoSet.forEach(video => {
         if (video && video.hasAttribute('autoplay')) {
           video.play().catch(() => {}); // Ignore play errors
         }
@@ -33,7 +34,7 @@ export default function ContentSectionMobile(props) {
     return () => {
       window.removeEventListener('sectionChange', handleSectionChange);
       window.removeEventListener('sectionVisible', handleSectionVisible);
-      videoRefs.current.clear();
+      videoSet.clear();
     };
   }, []);
 

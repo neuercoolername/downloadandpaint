@@ -42,7 +42,7 @@ function App() {
       setCurrentSectionIndex(sectionIndex);
       
       // Mark initial fade as completed once user leaves landing section
-      if (sectionIndex !== 0 && !hasInitialFadeCompleted) {
+      if (sectionIndex !== 0) {
         setHasInitialFadeCompleted(true);
       }
       

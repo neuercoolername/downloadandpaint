@@ -2,6 +2,7 @@ import "./App.css";
 import { useEffect, useState } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import { MOBILE_BREAKPOINT } from "./constants/constants";
+import contentArray from "./contentArray";
 import FullPageWrapper from "./components/FullPageWrapper/FullPageWrapper";
 import Navbar from "./components/NavBar/Navbar";
 import BrushMouseIcon from "./components/Common/BrushMouseIcon/BrushMouseIcon";
@@ -20,6 +21,8 @@ function App() {
   
   // Check if we're on the home page
   const isHomePage = location.pathname === '/';
+  const isVideoSection = currentSectionIndex > 0 &&
+    contentArray[currentSectionIndex - 1]?.content?.[0]?.type === 'video';
   useEffect(() => {
     const setVh = () => {
       document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`);
@@ -95,14 +98,16 @@ function App() {
   return (
     <>
       {showNavbar && !isOnLandingSection && (
-        <Navbar 
+        <Navbar
           isLandingPage={isOnLandingSection}
+          isVideoSection={isVideoSection}
           currentSectionIndex={currentSectionIndex}
         />
       )}
       {isHomePage && isOnLandingSection && (
-        <DelayedNavBar 
+        <DelayedNavBar
           isLandingPage={isOnLandingSection}
+          isVideoSection={isVideoSection}
           currentSectionIndex={currentSectionIndex}
           skipAnimation={hasInitialFadeCompleted}
         />

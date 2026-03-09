@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import { calculateChapterMapping, getCurrentChapter } from '../../utils/chapterMapping';
 import { MOBILE_BREAKPOINT } from '../../constants/constants';
 
-export default function Navbar({ isLandingPage = true, currentSectionIndex = 0 }) {
+export default function Navbar({ isLandingPage = true, isVideoSection = false, currentSectionIndex = 0 }) {
   const navigate = useNavigate();
   const location = useLocation();
   const [isChaptersDropdownOpen, setIsChaptersDropdownOpen] = useState(false);
@@ -125,7 +125,8 @@ export default function Navbar({ isLandingPage = true, currentSectionIndex = 0 }
   // Determine which chapter is currently active
   const activeChapter = getCurrentChapter(currentSectionIndex, isMobile);
 
-  const navbarColor = isLandingPage ? 'white' : '#333';
+  const useLightStyle = isLandingPage || isVideoSection;
+  const navbarColor = useLightStyle ? 'white' : '#333';
 
   return (
     <div>
@@ -139,7 +140,7 @@ export default function Navbar({ isLandingPage = true, currentSectionIndex = 0 }
             onMouseLeave={handleMouseLeave}
           >
             <img 
-              src={isLandingPage ? "/images/icon/navIcon-light.png" : "/images/icon/navIcon.png"}
+              src={useLightStyle ? "/images/icon/navIcon-light.png" : "/images/icon/navIcon.png"}
               alt="Menu"
               className={NavbarStyles.mobileIcon} 
               onClick={handleMobileIconClick}
@@ -149,7 +150,7 @@ export default function Navbar({ isLandingPage = true, currentSectionIndex = 0 }
           {isMobileOverlayOpen && (
             <div className={NavbarStyles.mobileOverlay} ref={mobileOverlayRef}>
               <img 
-                src={isLandingPage ? "/images/icon/navIcon-light.png" : "/images/icon/navIcon.png"}
+                src={useLightStyle ? "/images/icon/navIcon-light.png" : "/images/icon/navIcon.png"}
                 alt="Close"
                 className={NavbarStyles.mobileCloseIcon} 
                 onClick={handleMobileIconClick}

@@ -1,8 +1,29 @@
+import { useEffect, useRef } from 'react';
 import styles from "./ContentSection.module.css";
 import { renderTextWithFootnotes } from "../../utils/renderTextWithFootnotes";
 
 export default function ContentSection(props) {
   const { contentObj } = props;
+  const videoRefs = useRef(new Set());
+
+  useEffect(() => {
+    const videoSet = videoRefs.current;
+
+    const handleSectionChange = () => {
+      videoSet.forEach(video => { if (video && !video.paused) video.pause(); });
+    };
+    const handleSectionVisible = () => {
+      videoSet.forEach(video => { if (video && video.hasAttribute('autoplay')) video.play().catch(() => {}); });
+    };
+
+    window.addEventListener('sectionChange', handleSectionChange);
+    window.addEventListener('sectionVisible', handleSectionVisible);
+    return () => {
+      window.removeEventListener('sectionChange', handleSectionChange);
+      window.removeEventListener('sectionVisible', handleSectionVisible);
+      videoSet.clear();
+    };
+  }, []);
 
   const renderTitle = () => {
     if (contentObj.title) {
@@ -57,6 +78,7 @@ export default function ContentSection(props) {
       return (
         <div className={styles.videoContainer}>
           <video
+            ref={(el) => { if (el) videoRefs.current.add(el); }}
             src={item.mediaUrl}
             autoPlay={item.autoplay}
             loop={item.loop}

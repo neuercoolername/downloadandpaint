@@ -10,7 +10,7 @@ export default function AboutPage() {
           <p className={styles.projectInfo}>
             Download and Paint Like A Master is a project by{" "}
             <a
-              href="https://davidamberg.de/"
+              href="https://davidamberg.work/"
               target="_blank"
               rel="noopener noreferrer"
               className={styles.link}
@@ -21,7 +21,7 @@ export default function AboutPage() {
           </p>
 
           <p className={styles.contact}>
-            Contact: mail[at]downloadandpaint.info
+            Contact: mail[at]davidamberg.de
           </p>
 
           <div className={styles.supportSection}>

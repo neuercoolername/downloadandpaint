@@ -104,6 +104,16 @@ export default function FullPageWrapper() {
     }, 100);
   };
 
+  // Keyboard arrow navigation
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'ArrowDown') window.fullpage_api?.moveSectionDown();
+      if (e.key === 'ArrowUp') window.fullpage_api?.moveSectionUp();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
   // Check for target section from navbar navigation
   useEffect(() => {
     const targetSection = sessionStorage.getItem('targetSection');

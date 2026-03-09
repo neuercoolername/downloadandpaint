@@ -130,7 +130,7 @@ const contentArray = [
       {
         type: "image",
         mediaUrl: "/images/contentSections/IMG_0269.webp",
-        caption: "Munch's studio in Ekeley today",
+        caption: "Munch's studio in Ekely today",
       },
       {
         type: "image",
@@ -247,7 +247,7 @@ const contentArray = [
         type: "image",
         mediaUrl: "/images/contentSections/bild-9.webp",
         caption:
-          "A page in Galloways <i>Interface Effect</i> on the interface of World of Warcraft",
+          "A page in Galloways Interface Effect on the interface of World of Warcraft",
       },
     ],
     layout: "side-by-side",
@@ -383,7 +383,7 @@ const contentArray = [
       {
         type: "image",
         mediaUrl: "/images/contentSections/IMG_0229.webp",
-        caption: "<i>Painter by the Wall</i> being wheeled out of the archive",
+        caption: "Painter by the Wall being wheeled out of the archive",
       },
     ],
     layout: "side-by-side",
@@ -399,7 +399,7 @@ const contentArray = [
         type: "text",
         text: "What does that mean for me when I pick up these brushes and work with them?<br><br>I am just as immersed into the rules and logic of marketing and commercialisation as these brushes are.<br><br>What does it mean for me to be inside this capitalist interface? How much of this ideological interface is invisible, how much can be made visible?<br><br>Like the interface '<i>an ideological position can never be really successful until it is naturalized</i>' and it becomes an '<i>invisible barrier constraining thought and action</i>'[10]",
         footnotes: [
-          "Mc Kenzie Wark notices in <i>General Intellects</i> '<i>that most of The Interface Effect is written under the sign of Fredric Jameson</i>' (p.265) relating to Jamesons concept of cognitive mapping '<i>which might in shorthand be described as way of tracing how the totality of social relations in our commodified world show up, in spite of themselves, in a particular works of literature, art or media.</i>' (p. 251)",
+          "Mc Kenzie Wark notices in General Intellects 'that most of The Interface Effect is written under the sign of Fredric Jameson' (p.265) relating to Jamesons concept of cognitive mapping 'which might in shorthand be described as way of tracing how the totality of social relations in our commodified world show up, in spite of themselves, in a particular works of literature, art or media.' (p. 251)",
         ],
       },
     ],
